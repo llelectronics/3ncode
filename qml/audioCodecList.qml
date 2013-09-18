@@ -1,5 +1,5 @@
 /*
-  ** 3encode version 3.0
+  ** Part of 3encode version 3.0
   **
   ** by Leszek Lesner
   ** released under the terms of BSD
@@ -30,36 +30,60 @@
   ** (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
   ** EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   **/
-
 import QtQuick 1.1
 import org.kde.plasma.components 0.1 as PlasmaComponents
-import org.kde.plasma.core 0.1 as PlasmaCore
-import "qml"
 
-Rectangle {
-    width: 480  // Fixed for now
-    height: 555
-    color: "#C4BDBB"
+PlasmaComponents.ContextMenu {
 
-    ListView {
-        width: parent.width
-        height: parent.height
-        model: ListModel {
-            ListElement {
-                    name: "default"
-                }
-        }
+    signal codecChanged(string codec);
 
-        delegate: EncodeItem {
-            width: parent.width
-            height: parent.height
-        }
-
+    id: videoCodecMenu
+    PlasmaComponents.MenuItem {
+        text: qsTr("ac3")
+        onClicked: codecChanged(text)
     }
-    //    EncodeItem {
-    //       width: parent.width
-    //       height: parent.height
-    //    }
-
+    PlasmaComponents.MenuItem {
+        text: qsTr("flac")
+        onClicked: codecChanged(text)
+    }
+    PlasmaComponents.MenuItem {
+        text: qsTr("mp2")
+        onClicked: codecChanged(text)
+    }
+    PlasmaComponents.MenuItem {
+        text: qsTr("libfaac")
+        onClicked: codecChanged(text)
+    }
+    PlasmaComponents.MenuItem {
+        text: qsTr("libmp3lame")
+        onClicked: codecChanged(text)
+    }
+    PlasmaComponents.MenuItem {
+        text: qsTr("libvorbis")
+        onClicked: codecChanged(text)
+    }
+    PlasmaComponents.MenuItem {
+        text: qsTr("libopus")
+        onClicked: codecChanged(text)
+    }
+    PlasmaComponents.MenuItem {
+        text: qsTr("pcm_s16le")
+        onClicked: codecChanged(text)
+    }
+    PlasmaComponents.MenuItem {
+        text: qsTr("wmav1")
+        onClicked: codecChanged(text)
+    }
+    PlasmaComponents.MenuItem {
+        text: qsTr("wmav2")
+        onClicked: codecChanged(text)
+    }
+    PlasmaComponents.MenuItem {
+        text: qsTr("--")
+    }
+    PlasmaComponents.MenuItem {
+        text: qsTr("copy")
+        onClicked: codecChanged(text)
+    }
 
 }

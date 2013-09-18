@@ -1,5 +1,5 @@
 /*
-  ** 3encode version 3.0
+  ** Part of 3encode version 3.0
   **
   ** by Leszek Lesner
   ** released under the terms of BSD
@@ -30,36 +30,57 @@
   ** (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
   ** EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   **/
-
 import QtQuick 1.1
 import org.kde.plasma.components 0.1 as PlasmaComponents
-import org.kde.plasma.core 0.1 as PlasmaCore
-import "qml"
 
-Rectangle {
-    width: 480  // Fixed for now
-    height: 555
-    color: "#C4BDBB"
+PlasmaComponents.ContextMenu {
 
-    ListView {
-        width: parent.width
-        height: parent.height
-        model: ListModel {
-            ListElement {
-                    name: "default"
-                }
-        }
+    signal bitrateChanged(string bitrate);
 
-        delegate: EncodeItem {
-            width: parent.width
-            height: parent.height
-        }
-
+    id: audioBitrateMenu
+    PlasmaComponents.MenuItem {
+        text: qsTr("24k")
+        onClicked: bitrateChanged(text)
     }
-    //    EncodeItem {
-    //       width: parent.width
-    //       height: parent.height
-    //    }
-
+    PlasmaComponents.MenuItem {
+        text: qsTr("32k")
+        onClicked: bitrateChanged(text)
+    }
+    PlasmaComponents.MenuItem {
+        text: qsTr("48k")
+        onClicked: bitrateChanged(text)
+    }
+    PlasmaComponents.MenuItem {
+        text: qsTr("52k")
+        onClicked: bitrateChanged(text)
+    }
+    PlasmaComponents.MenuItem {
+        text: qsTr("56k")
+        onClicked: bitrateChanged(text)
+    }
+    PlasmaComponents.MenuItem {
+        text: qsTr("64k")
+        onClicked: bitrateChanged(text)
+    }
+    PlasmaComponents.MenuItem {
+        text: qsTr("128k")
+        onClicked: bitrateChanged(text)
+    }
+    PlasmaComponents.MenuItem {
+        text: qsTr("192k")
+        onClicked: bitrateChanged(text)
+    }
+    PlasmaComponents.MenuItem {
+        text: qsTr("256k")
+        onClicked: bitrateChanged(text)
+    }
+    PlasmaComponents.MenuItem {
+        text: qsTr("320k")
+        onClicked: bitrateChanged(text)
+    }
+    PlasmaComponents.MenuItem {
+        text: qsTr("custom")
+        onClicked: bitrateChanged(text)
+    }
 
 }

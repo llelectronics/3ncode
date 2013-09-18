@@ -1,5 +1,5 @@
 /*
-  ** 3encode version 3.0
+  ** Part of 3encode version 3.0
   **
   ** by Leszek Lesner
   ** released under the terms of BSD
@@ -30,36 +30,41 @@
   ** (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
   ** EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   **/
-
 import QtQuick 1.1
 import org.kde.plasma.components 0.1 as PlasmaComponents
-import org.kde.plasma.core 0.1 as PlasmaCore
-import "qml"
 
-Rectangle {
-    width: 480  // Fixed for now
-    height: 555
-    color: "#C4BDBB"
+PlasmaComponents.ContextMenu {
 
-    ListView {
-        width: parent.width
-        height: parent.height
-        model: ListModel {
-            ListElement {
-                    name: "default"
-                }
-        }
+    signal channelChanged(string channel);
 
-        delegate: EncodeItem {
-            width: parent.width
-            height: parent.height
-        }
-
+    id: audioLanguageChannelMenu
+    PlasmaComponents.MenuItem {
+        text: qsTr("0")
+        onClicked: channelChanged(text)
     }
-    //    EncodeItem {
-    //       width: parent.width
-    //       height: parent.height
-    //    }
-
+    PlasmaComponents.MenuItem {
+        text: qsTr("1")
+        onClicked: channelChanged(text)
+    }
+    PlasmaComponents.MenuItem {
+        text: qsTr("2")
+        onClicked: channelChanged(text)
+    }
+    PlasmaComponents.MenuItem {
+        text: qsTr("3")
+        onClicked: channelChanged(text)
+    }
+    PlasmaComponents.MenuItem {
+        text: qsTr("4")
+        onClicked: channelChanged(text)
+    }
+    PlasmaComponents.MenuItem {
+        text: qsTr("custom")
+        onClicked: channelChanged(text)
+    }
+    PlasmaComponents.MenuItem {
+        text: qsTr("not set")
+        onClicked: channelChanged(text)
+    }
 
 }

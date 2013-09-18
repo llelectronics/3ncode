@@ -106,5 +106,12 @@ PlasmaComponents.ContextMenu {
         text: qsTr("libvpx")
         onClicked: codecChanged(text)
     }
+    PlasmaComponents.MenuItem {
+        text: qsTr("--")
+    }
+    PlasmaComponents.MenuItem {
+        text: qsTr("copy")
+        onClicked: codecChanged(text)
+    }
 
 }

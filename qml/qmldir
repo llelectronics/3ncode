@@ -3,4 +3,9 @@ VideoCodecList 1.0 videoCodecList.qml
 VideoBitrateList 1.0 videoBitrateList.qml
 ResolutionList 1.0 resolutionList.qml
 AspectList 1.0 aspectList.qml
+AudioCodecList 1.0 audioCodecList.qml
+AudioChannelList 1.0 audioChannelList.qml
+AudioBitrateList 1.0 audioBitrateList.qml
+SamplingList 1.0 audioSamplingFreqList.qml
+AudioLanguageChannelList 1.0 audioLanguageChannelList.qml
 EncodeItem 1.0 encodeItem.qml

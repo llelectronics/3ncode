@@ -41,6 +41,11 @@ Item {
     property string videoBitrate: "777k"
     property string videoResolution: "no change"
     property string videoAspect: "no change"
+    property string audioCodec: "libmp3lame"
+    property string audioBitrate: "128k"
+    property string audioSamplingFreq: "44100"
+    property string audioChannel: "2"
+    property string audioLanguageChannel: "not set"
 
     // Header to open file and choose container
     Grid {
@@ -453,6 +458,11 @@ Item {
             hoverEnabled: true
 
             onEntered: {
+                if (summaryAudioRectangle.height == 250) {
+                    summaryAudioRectangle.height = 50
+                    summaryAudio.opacity = 1
+                    expandedAudio.opacity = 0
+                }
                 parent.height = 250
                 summaryVideo.opacity = 0
                 expandedVideo.opacity = 1
@@ -472,5 +482,440 @@ Item {
             }
         } // MouseArea
     } // summaryVideoRectangle
+
+    // Audio Box
+    Rectangle {
+        id: summaryAudioRectangle
+        color: "white"
+        anchors.top: summaryVideoRectangle.bottom
+        anchors.topMargin: 15
+        width: parent.width - 30
+        anchors.left: parent.left
+        anchors.leftMargin: 15
+        height: 50
+        radius: 8
+
+        Behavior on height {
+            NumberAnimation { duration: 500 }
+        }
+
+        Image {
+            source: if (summaryAudio.opacity == 1) { return "img/down.png" }
+                    else { return "img/up.png" }
+
+            anchors.right: parent.right
+            anchors.rightMargin: 5
+            anchors.top: parent.top
+            anchors.topMargin: 5
+        }
+
+        Grid {
+            id: summaryAudio
+            rows: 2
+            anchors.top: parent.top
+            anchors.topMargin: 5
+            width: parent.width - 15
+            height: parent.height - 15
+            anchors.verticalCenter: parent.verticalCenter
+            Behavior on opacity {
+                NumberAnimation { duration: 600 }
+            }
+
+            Text {
+                id: summaryAudioHeader
+                font.bold: true
+                text: qsTr("     Audio:")
+            }
+            Text { // codec, resolution, bitrate, aspect ratio
+                anchors.left: parent.left
+                anchors.leftMargin: 15
+                text: "<b>Codec:</b> " + audioCodec + " <b>Bitrate:</b> " + audioBitrate + " <b>Sampling Freq:</b> " +
+                      audioSamplingFreq + " <b>Channel:</b> " + audioChannel + " <br /><b>Language Channel:</b> " + audioLanguageChannel
+            }
+        } // Grid Summary Audio
+        Row {
+            id: expandedAudio
+            anchors.top: parent.top
+            anchors.topMargin: 5
+            width: parent.width - 15
+            height: parent.height - 15
+            anchors.verticalCenter: parent.verticalCenter
+            opacity: 0
+            spacing: 25
+
+            Behavior on opacity {
+                NumberAnimation { duration: 600 }
+            }
+
+            Column {
+                spacing: 10
+
+                Text {
+                    id: expandedAudioHeader
+                    font.bold: true
+                    text: qsTr("     Audio:")
+                }
+                Image {
+                    id: audioIcon
+                    source: "img/audio-x-generic.png"
+                    anchors.top: expandedVideoHeader.bottom
+                    anchors.topMargin: 15
+                    anchors.left: parent.left
+                    anchors.leftMargin: 10
+                }
+                Grid {   // Grid for checkboxes
+                    id: audioCheckboxes
+                    anchors.left: parent.left
+                    anchors.leftMargin: 10
+                    columns: 2
+                    rows: 3
+                    spacing: 5
+
+                    PlasmaComponents.CheckBox {
+                        id: audioDeactivate
+                    }
+                    Text {
+                        text: "Deactivate"
+                        anchors.verticalCenter: audioDeactivate.verticalCenter
+                        MouseArea {
+                            anchors.fill: parent
+                            onClicked: {
+                                if (audioDeactivate.checked == false) { audioDeactivate.checked = true }
+                                else {audioDeactivate.checked = false }
+                            }
+                        }
+                    }
+                } // Grid for checkboxes
+            } // Column for icon and checkboxes
+            Column { // Column for Codec, Bitrate, Resolution & Aspect Ratio
+                anchors.top: parent.top
+                anchors.topMargin: 45
+                spacing: 5
+
+                Row {
+                    Text {
+                        id: audioCodecLabel
+                        text: qsTr("Codec:")
+                        anchors.verticalCenter: audioCodecSelection.verticalCenter
+                        width: 55
+                    }
+
+                    PlasmaComponents.Button {
+                        id: audioCodecSelection
+                        width: 100
+                        height: 24
+                        text: "libmp3lame"
+                        iconSource: "go-down"
+                        anchors.left: audioCodecLabel.right
+                        anchors.leftMargin: 15
+                        onClicked: audioCodecMenu.open()
+                        AudioCodecList {
+                            id: audioCodecMenu
+                            visualParent: audioCodecSelection
+                            onCodecChanged: {
+                                audioCodecSelection.text = codec
+                                audioCodec = codec
+                            }
+                        }
+                    }
+                }
+                Row {
+                    Text {
+                        id: audioBitrateLabel
+                        text: qsTr("Bitrate:")
+                        width: 55
+                        anchors.verticalCenter: audioBitrateSelection.verticalCenter
+                    }
+                    PlasmaComponents.Button {
+                        id: audioBitrateSelection
+                        width: 100
+                        height: 24
+                        text: "128k"
+                        iconSource: "go-down"
+                        anchors.left: audioBitrateLabel.right
+                        anchors.leftMargin: 15
+                        onClicked: audioBitrateMenu.open()
+                        AudioBitrateList {
+                            id: audioBitrateMenu
+                            visualParent: audioBitrateSelection
+                            onBitrateChanged: {
+                                if (bitrate != "custom") {
+                                    audioBitrateSelection.text = bitrate
+                                    audioBitrate = bitrate
+                                    audioBitrateCustom.width = 5
+                                    audioBitrateCustomHint.opacity = 0
+                                    audioBitrateCustom.opacity = 0
+
+                                }
+                                else {
+                                    audioBitrateSelection.text = bitrate
+                                    audioBitrateCustom.opacity = 1
+                                    audioBitrateCustom.width = 100
+                                    audioBitrateCustomHint.text =  qsTr("Set bitrate")
+                                    audioBitrateCustomHint.opacity = 1
+                                    audioBitrateCustom.forceActiveFocus()
+                                    audioBitrateCustom.focus = true
+                                }
+                            }
+
+                        } // AudioBitrateList
+
+                    } // Button audioBitrateSelection
+                }
+                Row {
+
+                    PlasmaComponents.TextField {
+                        id: audioBitrateCustom
+                        width: 5
+                        opacity: 0
+                        anchors.verticalCenter: audioBitrateCustomHint.verticalCenter
+                        focus: true
+                        onAccepted: {
+                            audioBitrate = text
+                            console.log(audioBitrate)
+                            audioBitrateCustomHint.text = qsTr("Bitrate " +  audioBitrate + " set")
+                        }
+                        Behavior on width {
+                            NumberAnimation { duration: 400 }
+                        }
+                        PlasmaComponents.Button {
+                            id: audioBitrateCustomHint
+                            anchors.left: audioBitrateCustom.right
+                            anchors.leftMargin: 15
+                            opacity: 0
+                            Behavior on opacity {
+                                NumberAnimation { duration : 1800 }
+                            }
+                            text: qsTr("Set bitrate")
+                            onClicked: {
+                                audioBitrate = audioBitrateCustom.text
+                                text = qsTr("Bitrate " +  audioBitrate + " set")
+                            }
+                        }
+                    } // TextField audioBitrateCustom
+                }
+
+                Row {
+                    Text {
+                        id: audioSamplingFreqLabel
+                        text: qsTr("Sampl. Freq:")
+                        width: 55
+                        anchors.verticalCenter: audioSamplingFreqSelection.verticalCenter
+                    }
+                    PlasmaComponents.Button {
+                        id: audioSamplingFreqSelection
+                        width: 100
+                        height: 24
+                        text: "44100"
+                        iconSource: "go-down"
+                        anchors.left: audioSamplingFreqLabel.right
+                        anchors.leftMargin: 15
+                        onClicked: audioSamplingFreqMenu.open()
+                        SamplingList {
+                            id: audioSamplingFreqMenu
+                            visualParent: audioSamplingFreqSelection
+                            onSamplingChanged: {
+                                audioSamplingFreqSelection.text = sampling
+                                audioSamplingFreq = sampling
+                            }
+
+                        } // audioSamplingFreqList
+
+                    } // Button audioSamplingFreqSelection
+                    Text {
+                        anchors.left: audioSamplingFreqSelection.right
+                        anchors.leftMargin: 15
+                        anchors.verticalCenter: audioSamplingFreqSelection.verticalCenter
+                        text : "Hz"
+                    }
+                }
+
+                Row {
+                    Text {
+                        id: audioChannelLabel
+                        text: qsTr("Channel:")
+                        width: 55
+                        anchors.verticalCenter: audioChannelSelection.verticalCenter
+                    }
+                    PlasmaComponents.Button {
+                        id: audioChannelSelection
+                        width: 100
+                        height: 24
+                        text: "2"
+                        iconSource: "go-down"
+                        anchors.left: audioChannelLabel.right
+                        anchors.leftMargin: 15
+                        onClicked:audioChannelMenu.open()
+                        AudioChannelList {
+                            id: audioChannelMenu
+                            visualParent: audioChannelSelection
+                            onChannelChanged: {
+                                if (channel !== qsTr("custom")) {
+                                    audioChannelSelection.text = channel
+                                    audioChannel = channel
+                                    audioChannelCustom.width = 5
+                                    audioChannelCustomHint.opacity = 0
+                                    audioChannelCustom.opacity = 0
+
+                                }
+                                else {
+                                    audioChannelSelection.text = channel
+                                    audioChannelCustom.opacity = 1
+                                    audioChannelCustom.width = 100
+                                    audioChannelCustomHint.text =  qsTr("Set channel")
+                                    audioChannelCustomHint.opacity = 1
+                                    audioChannelCustom.forceActiveFocus()
+                                    audioChannelCustom.focus = true
+                                }
+                            }
+
+                        } // audioChannelList
+
+                    } // Button audioChannelSelection
+                }
+                Row {
+                    PlasmaComponents.TextField {
+                        id: audioChannelCustom
+                        width: 5
+                        opacity: 0
+                        focus: true
+                        anchors.verticalCenter: audioChannelCustomHint.verticalCenter
+                        onAccepted: {
+                            audioChannel = audioChannelCustom.text
+                            console.log(audioChannel)
+                            audioChannelCustomHint.text = qsTr("Channel " +  audioChannel + " set")
+                        }
+                        Behavior on width {
+                            NumberAnimation { duration: 400 }
+                        }
+                        PlasmaComponents.Button {
+                            id: audioChannelCustomHint
+                            anchors.left: audioChannelCustom.right
+                            anchors.leftMargin: 15
+                            opacity: 0
+                            Behavior on opacity {
+                                NumberAnimation { duration : 1800 }
+                            }
+                            text: qsTr("Set resolution")
+                            onClicked: {
+                                audioChannel = audioChannelCustom.text
+                                text = qsTr("Channel " +  audioChannel + " set")
+                            }
+                        }
+                    } // TextField audioChannelCustom
+                }
+                Row {
+                    Text {
+                        id: audioLanguageChannelLabel
+                        text: qsTr("Language:")
+                        width: 55
+                        anchors.verticalCenter: audioLanguageChannelSelection.verticalCenter
+                    }
+                    PlasmaComponents.Button {
+                        id: audioLanguageChannelSelection
+                        width: 100
+                        height: 24
+                        text: "not set"
+                        iconSource: "go-down"
+                        anchors.left: audioLanguageChannelLabel.right
+                        anchors.leftMargin: 15
+                        onClicked:audioLanguageChannelMenu.open()
+                        AudioLanguageChannelList {
+                            id: audioLanguageChannelMenu
+                            visualParent: audioLanguageChannelSelection
+                            onChannelChanged: {
+                                if (channel !== qsTr("custom")) {
+                                    audioLanguageChannelSelection.text = channel
+                                    audioLanguageChannel = channel
+                                    audioLanguageChannelCustom.width = 5
+                                    audioLanguageChannelCustomHint.opacity = 0
+                                    audioLanguageChannelCustom.opacity = 0
+
+                                }
+                                else {
+                                    audioLanguageChannelSelection.text = channel
+                                    audioLanguageChannelCustom.opacity = 1
+                                    audioLanguageChannelCustom.width = 100
+                                    audioLanguageChannelCustomHint.text =  qsTr("Set channel")
+                                    audioLanguageChannelCustomHint.opacity = 1
+                                    audioLanguageChannelCustom.forceActiveFocus()
+                                    audioLanguageChannelCustom.focus = true
+                                }
+                            }
+
+                        } // audioChannelList
+
+                    } // Button audioLanguageChannelSelection
+                }
+                Row {
+                    PlasmaComponents.TextField {
+                        id: audioLanguageChannelCustom
+                        width: 5
+                        opacity: 0
+                        focus: true
+                        anchors.verticalCenter: audioLanguageChannelCustomHint.verticalCenter
+                        onAccepted: {
+                            audioLanguageChannel = audioLanguageChannelCustom.text
+                            console.log(audioLanguageChannel)
+                            audioLanguageChannelCustomHint.text = qsTr("Channel " +  audioLanguageChannel + " set")
+                        }
+                        Behavior on width {
+                            NumberAnimation { duration: 400 }
+                        }
+                        PlasmaComponents.Button {
+                            id: audioLanguageChannelCustomHint
+                            anchors.left: audioLanguageChannelCustom.right
+                            anchors.leftMargin: 15
+                            opacity: 0
+                            Behavior on opacity {
+                                NumberAnimation { duration : 1800 }
+                            }
+                            text: qsTr("Set resolution")
+                            onClicked: {
+                                audioLanguageChannel = audioLanguageChannelCustom.text
+                                text = qsTr("Channel " +  audioLanguageChannel + " set")
+                            }
+                        }
+                    } // TextField audioLanguageChannelCustom
+                }
+
+//                    } // Button aspectSelection
+//                }
+
+
+            } // Column for Codec, Bitrate, ...
+
+        } // Row Expanded Audio
+        MouseArea {
+            //            anchors.fill: parent  // This does not work as it blocks every mouseclick on the parent later on
+            width: parent.width
+            height: 50
+            hoverEnabled: true
+
+            onEntered: {
+                if (summaryVideoRectangle.height == 250) {
+                    summaryVideoRectangle.height = 50
+                    summaryVideo.opacity = 1
+                    expandedVideo.opacity = 0
+                }
+                parent.height = 250
+                summaryAudio.opacity = 0
+                expandedAudio.opacity = 1
+            }
+            onClicked: {
+                if (parent.height == 50) {
+                    parent.height = 250
+                    summaryAudio.opacity = 0
+                    expandedAudio.opacity = 1
+                }
+                else
+                {
+                    parent.height = 50
+                    summaryAudio.opacity = 1
+                    expandedAudio.opacity = 0
+                }
+            }
+        } // MouseArea
+    } // summaryAudioRectangle
 
 }
