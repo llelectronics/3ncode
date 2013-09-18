@@ -59,6 +59,106 @@ Item {
         anchors.left: parent.left
         anchors.leftMargin: 15
 
+        // Check Container and set some audio and video default codecs here
+        function checkFormatandSetCodecs(format) {
+            if (format === "avi") {
+                videoCodec = "libxvid"
+                videoCodecSelection.text = "libxvid"
+                audioCodec ="libmp3lame"
+                audioCodecSelection.text = "libmp3lame"
+            }
+            else if (format === "mp4" || format === "mkv") {
+                videoCodec = "libx264"
+                videoCodecSelection.text = "libx264"
+                audioCodec = "libfaac"
+                audioCodecSelection.text = "libfaac"
+            }
+            else if (format === "ogv") {
+                videoCodec = "libtheora"
+                videoCodecSelection.text = "libtheora"
+                audioCodec = "libvorbis"
+                audioCodecSelection.text = "libvorbis"
+            }
+            else if (format === "webm") {
+                videoCodec = "libvpx"
+                videoCodecSelection.text = "libvpx"
+                audioCodec = "libvorbis"  // Maybe someday opus but webm seems not support it right now
+                audioCodecSelection.text = "libvorbis"
+            }
+            else if (format === "3gp") {
+                videoCodec = "h263"
+                videoCodecSelection.text = "h263"
+                audioCodec = "amr_nb"
+                audioCodecSelection.text = "libopencore_amrnb"
+            }
+            else if (format === "asf") {
+                videoCodec = "wmv1"
+                videoCodecSelection.text = "wmv1"
+                audioCodec = "wmav1"
+                audioCodecSelection.text = "wmav1"
+            }
+            else if (format === "wmv") {
+                videoCodec = "wmv2"
+                videoCodecSelection.text = "wmv2"
+                audioCodec = "wmav2"
+                audioCodecSelection.text = "wmav2"
+            }
+            else if (format === "mov") {
+                videoCodec = "mpeg4"
+                videoCodecSelection.text = "mpeg4"
+                audioCodec = "libfaac"
+                audioCodecSelection.text = "libfaac"
+            }
+            else if (format === "mpeg") {
+                videoCodec = "mpeg1"
+                videoCodecSelection.text = "mpeg1"
+                audioCodec = "mp2"
+                audioCodecSelection.text = "mp2"
+            }
+            else if (format === "flv") {
+                videoCodec = "flv"
+                videoCodecSelection.text = "flv"
+                audioCodec = "libmp3lame"
+                audioCodecSelection.text = "libmp3lame"
+            }
+            else if (format === "aac") {
+                videoDeactivate.checked = true
+                videoDeactivate.enabled = false
+                audioCodec = "libfaac"
+                audioCodecSelection.text = "libfaac"
+            }
+            else if (format === "mp3") {
+                videoDeactivate.checked = true
+                videoDeactivate.enabled = false
+                audioCodec = "libmp3lame"
+                audioCodecSelection.text = "libmp3lame"
+            }
+            else if (format === "ogg") {
+                videoDeactivate.checked = true
+                videoDeactivate.enabled = false
+                audioCodec = "libvorbis"
+                audioCodecSelection.text = "libvorbis"
+            }
+            else if (format === "ac3") {
+                videoDeactivate.checked = true
+                videoDeactivate.enabled = false
+                audioCodec = "ac3"
+                audioCodecSelection.text = "ac3"
+            }
+            else if (format === "mp2") {
+                videoDeactivate.checked = true
+                videoDeactivate.enabled = false
+                audioCodec = "mp2"
+                audioCodecSelection.text = "mp2"
+            }
+            else if (format === "wav") {
+                videoDeactivate.checked = true
+                videoDeactivate.enabled = false
+                audioCodec = "pcm_s16le"
+                audioCodecSelection.text = "pcm_s16le"
+            }
+        }
+
         PlasmaComponents.TextField {
             id: openfText
             placeholderText: qsTr("Open source file here")
@@ -99,7 +199,10 @@ Item {
             ContainerList {
                 id: contMenu
                 visualParent: containerSelection
-                onFormatChanged: containerSelection.text = format
+                onFormatChanged: {
+                    sourceGrid.checkFormatandSetCodecs(format)
+                    containerSelection.text = format
+                }
             }
         }
     }
@@ -121,8 +224,9 @@ Item {
         }
 
         Image {
-            source: if (summaryVideo.opacity == 1) { return "img/down.png" }
-                    else { return "img/up.png" }
+            source: if (summaryVideo.opacity == 1 && videoDeactivate.enabled == true) { return "img/down.png" }
+                    else if (summaryVideo.opacity == 0 && videoDeactivate.enabled == true) { return "img/up.png" }
+                    else { return "" }
 
             anchors.right: parent.right
             anchors.rightMargin: 5
@@ -145,13 +249,13 @@ Item {
             Text {
                 id: summaryVideoHeader
                 font.bold: true
-                text: qsTr("     Video:")
+                text: videoDeactivate.checked ? qsTr("     Video: deactivated") : qsTr("     Video:")
             }
             Text { // codec, resolution, bitrate, aspect ratio
                 anchors.left: parent.left
                 anchors.leftMargin: 15
-                text: "<b>Codec:</b> " + videoCodec + " <b>Bitrate:</b> " + videoBitrate + " <b>Resolution:</b> " +
-                      videoResolution + " <b>Aspect:</b> " + videoAspect
+                text: videoDeactivate.checked ? "" : "<b>Codec:</b> " + videoCodec + " <b>Bitrate:</b> " + videoBitrate + " <b>Resolution:</b> " +
+                                                videoResolution + " <b>Aspect:</b> " + videoAspect
             }
         } // Grid Summary Video
         Row {
@@ -174,7 +278,7 @@ Item {
                 Text {
                     id: expandedVideoHeader
                     font.bold: true
-                    text: qsTr("     Video:")
+                    text: videoDeactivate.checked ? qsTr("     Video: deactivated") : qsTr("     Video:")
                 }
                 Image {
                     id: videoIcon
@@ -198,6 +302,7 @@ Item {
                     Text {
                         text: "Deactivate"
                         anchors.verticalCenter: videoDeactivate.verticalCenter
+                        enabled: videoDeactivate.enabled
                         MouseArea {
                             anchors.fill: parent
                             onClicked: {
@@ -208,12 +313,14 @@ Item {
                     }
                     PlasmaComponents.CheckBox {
                         id: video2pass
+                        enabled: videoDeactivate.checked ? false : true
                     }
                     Text {
                         text: "2 Pass"
                         anchors.verticalCenter: video2pass.verticalCenter
                         MouseArea {
                             anchors.fill: parent
+                            enabled: videoDeactivate.checked ? false : true
                             onClicked: {
                                 if (video2pass.checked == false) { video2pass.checked = true }
                                 else {video2pass.checked = false }
@@ -222,12 +329,14 @@ Item {
                     }
                     PlasmaComponents.CheckBox {
                         id: videoMultithreading
+                        enabled: videoDeactivate.checked ? false : true
                     }
                     Text {
                         text: "Multithreading"
                         anchors.verticalCenter: videoMultithreading.verticalCenter
                         MouseArea {
                             anchors.fill: parent
+                            enabled: videoDeactivate.checked ? false : true
                             onClicked: {
                                 if (videoMultithreading.checked == false) { videoMultithreading.checked = true }
                                 else {videoMultithreading.checked = false }
@@ -258,6 +367,7 @@ Item {
                         anchors.left: videoCodecLabel.right
                         anchors.leftMargin: 15
                         onClicked: videoCodecMenu.open()
+                        enabled: videoDeactivate.checked ? false : true
                         VideoCodecList {
                             id: videoCodecMenu
                             visualParent: videoCodecSelection
@@ -284,6 +394,7 @@ Item {
                         anchors.left: videoBitrateLabel.right
                         anchors.leftMargin: 15
                         onClicked: videoBitrateMenu.open()
+                        enabled: videoDeactivate.checked ? false : true
                         VideoBitrateList {
                             id: videoBitrateMenu
                             visualParent: videoBitrateSelection
@@ -360,6 +471,7 @@ Item {
                         anchors.left: videoResolutionLabel.right
                         anchors.leftMargin: 15
                         onClicked: videoResolutionMenu.open()
+                        enabled: videoDeactivate.checked ? false : true
                         ResolutionList {
                             id: videoResolutionMenu
                             visualParent: videoResolutionSelection
@@ -434,6 +546,7 @@ Item {
                         anchors.left: aspectLabel.right
                         anchors.leftMargin: 15
                         onClicked: aspectMenu.open()
+                        enabled: videoDeactivate.checked ? false : true
                         AspectList {
                             id: aspectMenu
                             visualParent: aspectSelection
@@ -463,17 +576,19 @@ Item {
                     summaryAudio.opacity = 1
                     expandedAudio.opacity = 0
                 }
-                parent.height = 250
-                summaryVideo.opacity = 0
-                expandedVideo.opacity = 1
-            }
-            onClicked: {
-                if (parent.height == 50) {
+                if (videoDeactivate.enabled == true) {
                     parent.height = 250
                     summaryVideo.opacity = 0
                     expandedVideo.opacity = 1
                 }
-                else
+            }
+            onClicked: {
+                if (parent.height == 50 && videoDeactivate.enabled == true) {
+                    parent.height = 250
+                    summaryVideo.opacity = 0
+                    expandedVideo.opacity = 1
+                }
+                else if (videoDeactivate.enabled == true)
                 {
                     parent.height = 50
                     summaryVideo.opacity = 1
@@ -524,12 +639,12 @@ Item {
             Text {
                 id: summaryAudioHeader
                 font.bold: true
-                text: qsTr("     Audio:")
+                text: audioDeactivate.checked ? qsTr("     Audio: deactivated") : qsTr("     Audio:")
             }
             Text { // codec, resolution, bitrate, aspect ratio
                 anchors.left: parent.left
                 anchors.leftMargin: 15
-                text: "<b>Codec:</b> " + audioCodec + " <b>Bitrate:</b> " + audioBitrate + " <b>Sampling Freq:</b> " +
+                text: audioDeactivate.checked ? "" : "<b>Codec:</b> " + audioCodec + " <b>Bitrate:</b> " + audioBitrate + " <b>Sampling Freq:</b> " +
                       audioSamplingFreq + " <b>Channel:</b> " + audioChannel + " <br /><b>Language Channel:</b> " + audioLanguageChannel
             }
         } // Grid Summary Audio
@@ -553,7 +668,7 @@ Item {
                 Text {
                     id: expandedAudioHeader
                     font.bold: true
-                    text: qsTr("     Audio:")
+                    text: audioDeactivate.checked ? qsTr("     Audio: deactivated") : qsTr("     Audio:")
                 }
                 Image {
                     id: audioIcon
@@ -609,6 +724,7 @@ Item {
                         anchors.left: audioCodecLabel.right
                         anchors.leftMargin: 15
                         onClicked: audioCodecMenu.open()
+                        enabled: audioDeactivate.checked ? false : true
                         AudioCodecList {
                             id: audioCodecMenu
                             visualParent: audioCodecSelection
@@ -635,6 +751,7 @@ Item {
                         anchors.left: audioBitrateLabel.right
                         anchors.leftMargin: 15
                         onClicked: audioBitrateMenu.open()
+                        enabled: audioDeactivate.checked ? false : true
                         AudioBitrateList {
                             id: audioBitrateMenu
                             visualParent: audioBitrateSelection
@@ -711,6 +828,7 @@ Item {
                         anchors.left: audioSamplingFreqLabel.right
                         anchors.leftMargin: 15
                         onClicked: audioSamplingFreqMenu.open()
+                        enabled: audioDeactivate.checked ? false : true
                         SamplingList {
                             id: audioSamplingFreqMenu
                             visualParent: audioSamplingFreqSelection
@@ -746,6 +864,7 @@ Item {
                         anchors.left: audioChannelLabel.right
                         anchors.leftMargin: 15
                         onClicked:audioChannelMenu.open()
+                        enabled: audioDeactivate.checked ? false : true
                         AudioChannelList {
                             id: audioChannelMenu
                             visualParent: audioChannelSelection
@@ -820,6 +939,7 @@ Item {
                         anchors.left: audioLanguageChannelLabel.right
                         anchors.leftMargin: 15
                         onClicked:audioLanguageChannelMenu.open()
+                        enabled: audioDeactivate.checked ? false : true
                         AudioLanguageChannelList {
                             id: audioLanguageChannelMenu
                             visualParent: audioLanguageChannelSelection
@@ -879,8 +999,8 @@ Item {
                     } // TextField audioLanguageChannelCustom
                 }
 
-//                    } // Button aspectSelection
-//                }
+                //                    } // Button aspectSelection
+                //                }
 
 
             } // Column for Codec, Bitrate, ...

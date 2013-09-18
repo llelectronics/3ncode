@@ -102,7 +102,7 @@ PlasmaComponents.ContextMenu {
         onClicked: formatChanged(text)
     }
     PlasmaComponents.MenuItem {
-        text: qsTr("mp2")
+        text: qsTr("mp3")
         onClicked: formatChanged(text)
     }
     PlasmaComponents.MenuItem {
