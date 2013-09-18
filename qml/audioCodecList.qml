@@ -59,6 +59,10 @@ PlasmaComponents.ContextMenu {
         onClicked: codecChanged(text)
     }
     PlasmaComponents.MenuItem {
+        text: qsTr("libopencore_amrnb")
+        onClicked: codecChanged(text)
+    }
+    PlasmaComponents.MenuItem {
         text: qsTr("libvorbis")
         onClicked: codecChanged(text)
     }
