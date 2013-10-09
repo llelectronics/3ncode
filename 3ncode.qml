@@ -37,29 +37,104 @@ import org.kde.plasma.core 0.1 as PlasmaCore
 import "qml"
 
 Rectangle {
+    id: rootRectangle
     width: 480  // Fixed for now
-    height: 555
+    height: 575
     color: "#C4BDBB"
 
-    ListView {
+    function showAbout() {
+        aboutView.opacity = 1
+    }
+
+    PlasmaComponents.Button {
+        id: add2Queue
+        text: qsTr("Queue")
+        iconSource: "list-add"
+        anchors.right: parent.right
+        anchors.rightMargin: 15
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 15
+        width: 120
+        height: 32
+        // TODO: Add to queue
+        onClicked: { console.log(text.length) }
+    }
+
+    EncodeItem {
+        id: encodeItem
         width: parent.width
         height: parent.height
-        model: ListModel {
-            ListElement {
-                    name: "default"
-                }
-        }
-
-        delegate: EncodeItem {
-            width: parent.width
-            height: parent.height
-        }
-
+        anchors.top: parent.top
+        anchors.topMargin: 15
+        anchors.left: parent.left
+        anchors.leftMargin: 15
+        anchors.bottomMargin: 15
     }
-    //    EncodeItem {
-    //       width: parent.width
-    //       height: parent.height
-    //    }
 
+    PlasmaComponents.Button {
+        id: helpButton
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 15
+        anchors.left: parent.left
+        anchors.leftMargin: 15
+        width:40
+        height:24
+        onClicked: helpMenu.open()
+
+        Image {
+            anchors.centerIn: parent
+            width: parent.width - 2
+            //height: parent.height - 1
+            source: "qml/img/configure.png"
+            smooth: true
+        }
+    }
+
+    PlasmaComponents.ContextMenu {
+        id: helpMenu
+        visualParent: helpButton
+        PlasmaComponents.MenuItem {
+            text: qsTr("Show Command")
+            icon: QIcon("terminal")
+            onClicked: {
+                if (encodeItem.cmdbox.height == 0) {
+                    encodeItem.cmdbox.height = 40
+                }
+                else {
+                    encodeItem.cmdbox.height = 0
+                }
+                encodeItem.cmdbox.toggleShow()
+            }
+        }
+        PlasmaComponents.MenuItem {
+            text: qsTr("Show Queue")
+            icon: QIcon("evolution-tasks")
+            // TODO show Queue here
+            onClicked: {  }
+        }
+        PlasmaComponents.MenuItem {
+            text: qsTr("Show History")
+            icon: QIcon("documentation")
+            // TODO show History here
+            onClicked: {  }
+        }
+        PlasmaComponents.MenuItem {
+            text: qsTr("Show Log")
+            icon: QIcon("text-x-changelog")
+            // TODO show Log here
+            onClicked: {  }
+        }
+        PlasmaComponents.MenuItem {
+            text: qsTr("About")
+            icon: QIcon("gtk-about")
+            onClicked: showAbout()
+        }
+    }
+
+    AboutView {
+        id: aboutView
+        anchors.centerIn: parent
+        opacity: 0
+    }
 
 }
