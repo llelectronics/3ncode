@@ -37,6 +37,8 @@ import org.kde.plasma.core 0.1 as PlasmaCore
 
 Item {
     id: root
+    property string source: openfText.text
+    property string target: savefText.text
     property string videoCodec: "libxvid"
     property string videoBitrate: "777k"
     property string videoResolution: "no change"
@@ -47,6 +49,7 @@ Item {
     property string audioChannel: "2"
     property string audioLanguageChannel: "not set"
     property alias cmdbox: cmdbox
+    property string cmd: cmdText.text
 
     // Header to open file and choose container
     Grid {

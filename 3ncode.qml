@@ -57,7 +57,15 @@ Rectangle {
         width: 120
         height: 32
         // TODO: Add to queue
-        onClicked: { console.log(text.length) }
+        onClicked: {
+            console.log(text.length)
+            queueView.queueList.model.append({"source": encodeItem.source,"target": encodeItem.target,"videoCodec": encodeItem.videoCodec,
+                                                 "videoBitrate": encodeItem.videoBitrate, "videoResolution": encodeItem.videoResolution,
+                                                 "videoAspect": encodeItem.videoAspect, "audioCodec": encodeItem.audioCodec,
+                                                 "audioBitrate": encodeItem.audioBitrate, "audioSamplingFreq": encodeItem.audioSamplingFreq,
+                                                 "audioChannel": encodeItem.audioChannel, "AudioLanguageChannel": encodeItem.audioLanguageChannel,
+                                                 "cmd": encodeItem.cmd})
+        }
     }
 
     EncodeItem {
@@ -110,7 +118,7 @@ Rectangle {
             text: qsTr("Show Queue")
             icon: QIcon("evolution-tasks")
             // TODO show Queue here
-            onClicked: {  }
+            onClicked: { queueView.visible = true }
         }
         PlasmaComponents.MenuItem {
             text: qsTr("Show History")
@@ -129,6 +137,11 @@ Rectangle {
             icon: QIcon("gtk-about")
             onClicked: showAbout()
         }
+    }
+
+    Queue {
+        id: queueView
+        visible: false
     }
 
     AboutView {
