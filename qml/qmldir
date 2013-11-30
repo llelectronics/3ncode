@@ -9,3 +9,7 @@ AudioBitrateList 1.0 audioBitrateList.qml
 SamplingList 1.0 audioSamplingFreqList.qml
 AudioLanguageChannelList 1.0 audioLanguageChannelList.qml
 EncodeItem 1.0 encodeItem.qml
+AboutView 1.0 aboutview.qml
+QueueModel 1.0 queueModel.qml
+QueueList 1.0 queueList.qml
+Queue 1.0 queue.qml
