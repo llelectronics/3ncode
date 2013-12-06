@@ -42,9 +42,11 @@ Rectangle {
     height: 575
     color: "#C4BDBB"
 
+
     function showAbout() {
         aboutView.opacity = 1
     }
+
 
     PlasmaComponents.Button {
         id: add2Queue
@@ -124,13 +126,19 @@ Rectangle {
             text: qsTr("Show History")
             icon: QIcon("documentation")
             // TODO show History here
-            onClicked: {  }
+            onClicked: {
+                logViewer.readTxt("/home/leszek/encode_history.log")
+                logViewer.visible = true
+            }
         }
         PlasmaComponents.MenuItem {
             text: qsTr("Show Log")
             icon: QIcon("text-x-changelog")
             // TODO show Log here
-            onClicked: {  }
+            onClicked: {
+                logViewer.readTxt("/home/leszek/encode.log")
+                logViewer.visible = true
+            }
         }
         PlasmaComponents.MenuItem {
             text: qsTr("About")
@@ -141,6 +149,11 @@ Rectangle {
 
     Queue {
         id: queueView
+        visible: false
+    }
+
+    LogView {
+        id : logViewer
         visible: false
     }
 
