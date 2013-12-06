@@ -13,8 +13,5 @@ AboutView 1.0 aboutview.qml
 QueueModel 1.0 queueModel.qml
 QueueList 1.0 queueList.qml
 Queue 1.0 queue.qml
-<<<<<<< HEAD
 LogView 1.0 logView.qml
-=======
 ConvertAnimView 1.0 convertAnimView.qml
->>>>>>> 53691471fecc4bdae2010da32ae5c6c6a7b7c7d2
