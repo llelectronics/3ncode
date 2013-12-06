@@ -13,3 +13,4 @@ AboutView 1.0 aboutview.qml
 QueueModel 1.0 queueModel.qml
 QueueList 1.0 queueList.qml
 Queue 1.0 queue.qml
+ConvertAnimView 1.0 convertAnimView.qml

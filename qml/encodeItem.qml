@@ -51,6 +51,8 @@ Item {
     property alias cmdbox: cmdbox
     property string cmd: cmdText.text
 
+    signal encodeClicked(string ffmpegCmd);
+
     // Header to open file and choose container
     Grid {
         id: sourceGrid
@@ -1244,6 +1246,7 @@ Item {
             width:140
             height: 48
             iconSource: "file://img/encode-btn.png"
+            onClicked: { encodeClicked(sourceGrid.createFFmpegCommand()) }
             Image {
                 id: icon
                 width: 48

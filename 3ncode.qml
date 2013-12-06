@@ -42,8 +42,18 @@ Rectangle {
     height: 575
     color: "#C4BDBB"
 
+    signal encodeCmd(string cmd)
+
     function showAbout() {
         aboutView.opacity = 1
+    }
+    function showEncodeAnimaton() {
+        animView.visible=true
+        animView.animationStart()
+    }
+    function hideEncodeAnimation() {
+        animView.animationStop()
+        animView.visible=false
     }
 
     PlasmaComponents.Button {
@@ -77,6 +87,10 @@ Rectangle {
         anchors.left: parent.left
         anchors.leftMargin: 15
         anchors.bottomMargin: 15
+        onEncodeClicked: {
+            encodeCmd(ffmpegCmd)
+            showEncodeAnimaton()
+        }
     }
 
     PlasmaComponents.Button {
@@ -141,6 +155,11 @@ Rectangle {
 
     Queue {
         id: queueView
+        visible: false
+    }
+
+    ConvertAnimView {
+        id: animView
         visible: false
     }
 
