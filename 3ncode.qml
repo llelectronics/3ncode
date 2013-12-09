@@ -167,7 +167,7 @@ Rectangle {
 
     LogView {
         id : logViewer
-        
+        visible: false
     }   
     ConvertAnimView {
         id: animView

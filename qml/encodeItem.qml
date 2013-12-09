@@ -535,6 +535,12 @@ Item {
                             }
                             text: qsTr("Set bitrate")
                             onClicked: {
+                                if (videoBitrateCustom.text.substr(-1) === "k") {
+
+                                }
+                                else {
+                                    videoBitrateCustom.text = videoBitrateCustom.text + "k"
+                                }
                                 videoBitrate = videoBitrateCustom.text
                                 text = qsTr("Bitrate " +  videoBitrate + " set")
                             }
@@ -897,6 +903,12 @@ Item {
                             }
                             text: qsTr("Set bitrate")
                             onClicked: {
+                                if (audioBitrateCustom.text.substr(-1) === "k") {
+
+                                }
+                                else {
+                                    audioBitrateCustom.text = audioBitrateCustom.text + "k"
+                                }
                                 audioBitrate = audioBitrateCustom.text
                                 text = qsTr("Bitrate " +  audioBitrate + " set")
                             }
