@@ -43,6 +43,8 @@ Rectangle {
     color: "#C4BDBB"
 
     signal encodeCmd(string cmd)
+    signal openFile();
+    signal saveFile(string filename);
 
     function showAbout() {
         aboutView.opacity = 1
@@ -54,6 +56,12 @@ Rectangle {
     function hideEncodeAnimation() {
         animView.animationStop()
         animView.visible=false
+    }
+    function sourceFilename(filename) {
+        encodeItem.sourceFilename = filename
+    }
+    function targetFilename(filename) {
+        encodeItem.targetFilename = filename
     }
 
 
@@ -89,8 +97,14 @@ Rectangle {
         anchors.leftMargin: 15
         anchors.bottomMargin: 15
         onEncodeClicked: {
-            encodeCmd(ffmpegCmd)
-            showEncodeAnimaton()
+            encodeCmd(ffmpegCmd);
+            showEncodeAnimaton();
+        }
+        onOpenFileClicked: {
+            openFile();
+        }
+        onSaveFileClicked: {
+            saveFile(fileName);
         }
     }
 

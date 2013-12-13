@@ -50,8 +50,12 @@ Item {
     property string audioLanguageChannel: "not set"
     property alias cmdbox: cmdbox
     property string cmd: cmdText.text
+    property alias sourceFilename: openfText.text
+    property alias targetFilename: savefText.text
 
     signal encodeClicked(string ffmpegCmd);
+    signal openFileClicked();
+    signal saveFileClicked(string fileName);
 
     // Header to open file and choose container
     Grid {
@@ -240,18 +244,23 @@ Item {
                 // Output file
                 cmd += " '" + savefText.text + "'"
             }
-            console.log(cmd) //DEBUG
+            //console.log(cmd) //DEBUG
             return cmd
         }
 
-        PlasmaComponents.TextField {
+        TextField {
             id: openfText
             placeholderText: qsTr("Open source file here")
             anchors.top: parent.top
             anchors.left: parent.left
             width: 350
             height: 32
+            clearButtonShown: true
+            onTextChanged: {
+                sourceGrid.checkFormatandSetCodecs(containerSelection.text)
+            }
         }
+
         PlasmaComponents.Button {
             id: openfBtn
             text: qsTr("Open")
@@ -262,7 +271,7 @@ Item {
             height: 32
             iconSource: "document-open"
             // Just for testing now // DEBUG
-            onClicked: { sourceGrid.createFFmpegCommand() }
+            onClicked: { openFileClicked() }
         }
         Text {
             id: containerLabel
@@ -511,7 +520,7 @@ Item {
                 }
                 Row {
 
-                    PlasmaComponents.TextField {
+                    TextField {
                         id: videoBitrateCustom
                         width: 5
                         opacity: 0
@@ -593,7 +602,7 @@ Item {
                     } // Button videoResolutionSelection
                 }
                 Row {
-                    PlasmaComponents.TextField {
+                    TextField {
                         id: videoResolutionCustom
                         width: 5
                         opacity: 0
@@ -879,7 +888,7 @@ Item {
                 }
                 Row {
 
-                    PlasmaComponents.TextField {
+                    TextField {
                         id: audioBitrateCustom
                         width: 5
                         opacity: 0
@@ -997,7 +1006,7 @@ Item {
                     } // Button audioChannelSelection
                 }
                 Row {
-                    PlasmaComponents.TextField {
+                    TextField {
                         id: audioChannelCustom
                         width: 5
                         opacity: 0
@@ -1072,7 +1081,7 @@ Item {
                     } // Button audioLanguageChannelSelection
                 }
                 Row {
-                    PlasmaComponents.TextField {
+                    TextField {
                         id: audioLanguageChannelCustom
                         width: 5
                         opacity: 0
@@ -1155,11 +1164,12 @@ Item {
         //anchors.leftMargin: 15
         height: 40
 
-        PlasmaComponents.TextField {
+        TextField {
             id: savefText
             placeholderText: qsTr("Save target file here")
             width: 350
             height: 32
+            clearButtonShown: true
         }
         PlasmaComponents.Button {
             id: savefBtn
@@ -1171,7 +1181,7 @@ Item {
             height: 32
             iconSource: "document-save"
             // Just for testing now // DEBUG
-            onClicked: { sourceGrid.createFFmpegCommand() }
+            onClicked: { saveFileClicked(target);  }
         }
     }
     Item {
@@ -1227,7 +1237,7 @@ Item {
                 NumberAnimation { duration: 600 }
             }
         }
-        PlasmaComponents.TextField {
+        TextField {
             id: cmdText
             anchors.left: cmdLabel.right
             anchors.leftMargin: 5
