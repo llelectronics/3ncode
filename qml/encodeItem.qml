@@ -196,7 +196,8 @@ Item {
             var cmd = "ffmpeg -i '" + openfText.text + "'"
 
             // Format
-            cmd += " -f " + containerSelection.text
+            // For now we don't use format here as the detection for file extension works quite good
+            //cmd += " -f " + containerSelection.text
 
             // Audio conversions first
             // example ffmpeg cmd:

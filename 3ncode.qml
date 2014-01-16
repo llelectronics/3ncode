@@ -98,7 +98,7 @@ Rectangle {
         anchors.bottomMargin: 15
         onEncodeClicked: {
             encodeCmd(ffmpegCmd);
-            showEncodeAnimaton();
+            //showEncodeAnimaton();
         }
         onOpenFileClicked: {
             openFile();
