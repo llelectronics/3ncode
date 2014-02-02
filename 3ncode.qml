@@ -41,21 +41,29 @@ Rectangle {
     width: 480  // Fixed for now
     height: 575
     color: "#C4BDBB"
+    property string outFile
 
-    signal encodeCmd(string cmd)
+    signal encodeCmd(string cmd, string outputFile)
     signal openFile();
     signal saveFile(string filename);
 
     function showAbout() {
         aboutView.opacity = 1
     }
+    function showError(errtxt) {
+        errorView.opacity = 1.0
+        errorView.txt = errorView.txt + "\n" + errtxt
+    }
     function showEncodeAnimaton() {
-        animView.visible=true
+        animView.opacity = 1
         animView.animationStart()
+    }
+    function successEncode() {
+        animView.success()
     }
     function hideEncodeAnimation() {
         animView.animationStop()
-        animView.visible=false
+        animView.opacity = 0
     }
     function sourceFilename(filename) {
         encodeItem.sourceFilename = filename
@@ -97,7 +105,8 @@ Rectangle {
         anchors.leftMargin: 15
         anchors.bottomMargin: 15
         onEncodeClicked: {
-            encodeCmd(ffmpegCmd);
+            encodeCmd(ffmpegCmd,outputFile);
+            outFile = outputFile;
             //showEncodeAnimaton();
         }
         onOpenFileClicked: {
@@ -185,7 +194,17 @@ Rectangle {
     }   
     ConvertAnimView {
         id: animView
-        visible: false
+        opacity: 0
+        outputfile: outFile
+    }
+    ErrorView {
+        id: errorView
+        opacity: 0
+        width: parent.width -(parent.width/8)
+        height: 250
+        Behavior on opacity {
+            NumberAnimation { target: errorView; property: "opacity"; duration: 250; easing.type: Easing.InOutQuad }
+        }
     }
 
     AboutView {

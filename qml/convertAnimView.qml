@@ -32,6 +32,7 @@
   **/
 
 import QtQuick 1.1
+import org.kde.plasma.components 0.1 as PlasmaComponents
 
 Rectangle {
     id: convertAnimPage
@@ -43,28 +44,88 @@ Rectangle {
     border.width: 1
     radius: 8
     z:100  // Above all
+    property string outputfile
+
+    Behavior on opacity {
+        NumberAnimation { target: convertAnimPage; property: "opacity"; duration: 250; easing.type: Easing.InOutQuad }
+    }
 
     function animationStart() {
         animate.start()
+        if (successImg != 0) successImg = 0
     }
     function animationStop() {
         animate.stop()
     }
 
+    function success() {
+        animationStop()
+        successImg.opacity = 1
+        animText.text = "Encoding " + outputfile + " finished !"
+    }
+
+    PlasmaComponents.Button {
+        anchors.right: parent.right
+        anchors.top: parent.top
+        text: "X"
+        onClicked: parent.opacity = 0
+        visible: {
+            if (successImg.opacity != 0) return true
+            else return false
+        }
+    }
+
     Image {
         id: animLogo
         source: "img/convert.png"
-        anchors.centerIn: parent
+        anchors.top: parent.top
+        anchors.topMargin: 25
+        anchors.horizontalCenter: parent.horizontalCenter
         height: 128
         width: 128
+    }
+    Image {
+        id: successImg
+        anchors.right: animLogo.right
+        anchors.bottom: animLogo.bottom
+        height: 64
+        width: 64
+        source: "img/success.png"
+        opacity: 0
+        Behavior on opacity {
+            NumberAnimation { target: successImg; property: "opacity"; duration: 500; easing.type: Easing.InOutBounce }
+        }
     }
     Text {
         id: animText
         anchors.top: animLogo.bottom
         anchors.topMargin: 15
         anchors.horizontalCenter: parent.horizontalCenter
+        width: parent.width - 25
+        elide: Text.ElideMiddle
         font.bold: true
-        text: "Encoding ..."
+        text: outputfile ? "Encoding " + outputfile : "Encoding "
+    }
+//    Text {
+//        id: animText
+//        anchors.left: encText.right
+//        anchors.verticalCenter: encText.verticalCenter
+//        font.bold: true
+//    }
+
+    MouseArea {
+        anchors.fill: parent
+        onClicked: convertAnimPage.opacity = 0
+    }
+
+    PlasmaComponents.Button {
+        id: openBtn
+        anchors.top: animText.bottom
+        anchors.topMargin: 15
+        anchors.horizontalCenter: parent.horizontalCenter
+        text: qsTr("Open File")
+        opacity: successImg.opacity
+        onClicked: Qt.openUrlExternally(outputfile)
     }
 
     ParallelAnimation {
@@ -79,14 +140,14 @@ Rectangle {
             //easing {type: Easing.OutBack; overshoot: 500}
         }
         SequentialAnimation {
-            PropertyAction { target: animText; property: "text"; value: "Encoding" }
+            PropertyAction { target: animText; property: "text"; value: "Encoding " + outputfile }
             // Just a useless numberanimation for duration pause in text animation
             NumberAnimation { target: animText; property: "anchors.topMargin"; to: 15; duration: 1500 }
-            PropertyAction { target: animText; property: "text"; value: "Encoding ." }
+            PropertyAction { target: animText; property: "text"; value: "Encoding " + outputfile + " ." }
             NumberAnimation { target: animText; property: "anchors.topMargin"; to: 15; duration: 1500 }
-            PropertyAction { target: animText; property: "text"; value: "Encoding .." }
+            PropertyAction { target: animText; property: "text"; value: "Encoding " + outputfile + " .." }
             NumberAnimation { target: animText; property: "anchors.topMargin"; to: 15; duration: 1500 }
-            PropertyAction { target: animText; property: "text"; value: "Encoding ..." }
+            PropertyAction { target: animText; property: "text"; value: "Encoding " + outputfile + " ..." }
             NumberAnimation { target: animText; property: "anchors.topMargin"; to: 15; duration: 1500 }
             loops: Animation.Infinite
         }
