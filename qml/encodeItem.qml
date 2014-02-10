@@ -427,6 +427,7 @@ Item {
                     PlasmaComponents.CheckBox {
                         id: videoMultithreading
                         enabled: videoDeactivate.checked ? false : true
+                        checked: true // A sane default
                     }
                     Text {
                         text: "Multithreading"

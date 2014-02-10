@@ -46,6 +46,7 @@ Rectangle {
     signal encodeCmd(string cmd, string outputFile)
     signal openFile();
     signal saveFile(string filename);
+    signal abortEncode();
 
     function showAbout() {
         aboutView.opacity = 1
@@ -60,6 +61,7 @@ Rectangle {
     }
     function successEncode() {
         animView.success()
+        queueView.finishedEncode()
     }
     function hideEncodeAnimation() {
         animView.animationStop()
@@ -70,6 +72,10 @@ Rectangle {
     }
     function targetFilename(filename) {
         encodeItem.targetFilename = filename
+    }
+    function showQueueButton() {
+        console.log("Show queue Button now")
+        queueButton.opacity = 1
     }
 
 
@@ -105,7 +111,14 @@ Rectangle {
         anchors.leftMargin: 15
         anchors.bottomMargin: 15
         onEncodeClicked: {
-            encodeCmd(ffmpegCmd,outputFile);
+            queueView.queueList.model.append({"source": encodeItem.source,"target": encodeItem.target,"videoCodec": encodeItem.videoCodec,
+                                                 "videoBitrate": encodeItem.videoBitrate, "videoResolution": encodeItem.videoResolution,
+                                                 "videoAspect": encodeItem.videoAspect, "audioCodec": encodeItem.audioCodec,
+                                                 "audioBitrate": encodeItem.audioBitrate, "audioSamplingFreq": encodeItem.audioSamplingFreq,
+                                                 "audioChannel": encodeItem.audioChannel, "AudioLanguageChannel": encodeItem.audioLanguageChannel,
+                                                 "cmd": encodeItem.cmd});
+            queueView.encodeNext();
+            //encodeCmd(ffmpegCmd,outputFile);
             outFile = outputFile;
             //showEncodeAnimaton();
         }
@@ -180,6 +193,28 @@ Rectangle {
             text: qsTr("About")
             icon: QIcon("gtk-about")
             onClicked: showAbout()
+        }
+    }
+
+    PlasmaComponents.Button {
+        id: queueButton
+        anchors.left: helpButton.right
+        anchors.leftMargin: 15
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 15
+        width:40
+        height:24
+        opacity: 0
+        Image {
+            anchors.centerIn: parent
+            width: parent.height
+            height: parent.height
+            smooth: true
+            source: "qml/img/convert.png"
+        }
+        onClicked: {
+            animView.opacity = 1
+            queueButton.opacity = 0
         }
     }
 

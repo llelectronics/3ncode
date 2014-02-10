@@ -109,7 +109,8 @@ def encodeCmd(cmd,outfile):
   open(home + "/encode.log", "a").write("")
   cmdProcess.start(cmd) # + " | tee -a ~/encode.log")
   
-
+def abortEncode():
+  cmdProcess.terminate()
 
 # Import popen to execute shell commands, 
 # path for working with standard paths 
@@ -142,6 +143,7 @@ if len(sys.argv) > 1:
 rootObject.openFile.connect(openFile)
 rootObject.saveFile.connect(saveFile)
 rootObject.encodeCmd.connect(encodeCmd)
+rootObject.abortEncode.connect(abortEncode)
 
 # Create encode process
 cmdProcess = MyQProcess()

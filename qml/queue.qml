@@ -38,8 +38,24 @@ Rectangle {
     anchors.fill: parent
     color: parent.color
     property alias queueList: queueList
+    property bool finished: true
 
     QueueList { id: queueList }
+
+    function encodeNext() {
+        if (queueList.model.count > 0 && finished != false) {
+            rootRectangle.encodeCmd(queueList.model.get(0).cmd,queueList.model.get(0).target);
+            rootRectangle.outFile = queueList.model.get(0).target;
+            finished = false;
+        }
+    }
+
+    function finishedEncode() {
+        // Assume item 0 is finished
+        queueList.model.remove(0)
+        finished = true
+        encodeNext()
+    }
 
 
     PlasmaComponents.Button {
@@ -72,6 +88,7 @@ Rectangle {
             anchors.horizontalCenter: parent.horizontalCenter
             width:140
             height: 48
+            enabled: finished
             iconSource: "file://img/encode-btn.png"
             Image {
                 id: icon

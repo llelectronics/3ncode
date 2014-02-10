@@ -34,32 +34,32 @@ import QtQuick 1.1
 
 ListModel {
     // Default Entry
-    ListElement {
-        source: "Source"
-        target: "Target"
-        videoCodec: "libxvid"
-        videoBitrate: "777k"
-        videoResolution: "no change"
-        videoAspect: "no change"
-        audioCodec: "libmp3lame"
-        audioBitrate: "128k"
-        audioSamplingFreq: "44100"
-        audioChannel: "2"
-        AudioLanguageChannel: "not set"
-        cmd: "ffmpeg command 1"
-    }
-    ListElement {
-        source: "Source2"
-        target: "Target2"
-        videoCodec: "libxvid"
-        videoBitrate: "777k"
-        videoResolution: "no change"
-        videoAspect: "no change"
-        audioCodec: "libmp3lame"
-        audioBitrate: "128k"
-        audioSamplingFreq: "44100"
-        audioChannel: "2"
-        AudioLanguageChannel: "not set"
-        cmd: "ffmpeg command 2"
-    }
+//    ListElement {
+//        source: "Source"
+//        target: "Target"
+//        videoCodec: "libxvid"
+//        videoBitrate: "777k"
+//        videoResolution: "no change"
+//        videoAspect: "no change"
+//        audioCodec: "libmp3lame"
+//        audioBitrate: "128k"
+//        audioSamplingFreq: "44100"
+//        audioChannel: "2"
+//        AudioLanguageChannel: "not set"
+//        cmd: "ffmpeg command 1"
+//    }
+//    ListElement {
+//        source: "Source2"
+//        target: "Target2"
+//        videoCodec: "libxvid"
+//        videoBitrate: "777k"
+//        videoResolution: "no change"
+//        videoAspect: "no change"
+//        audioCodec: "libmp3lame"
+//        audioBitrate: "128k"
+//        audioSamplingFreq: "44100"
+//        audioChannel: "2"
+//        AudioLanguageChannel: "not set"
+//        cmd: "ffmpeg command 2"
+//    }
 }
