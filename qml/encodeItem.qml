@@ -129,8 +129,8 @@ Item {
             }
             else if (format === "mpeg") {
                 activateVideo()
-                videoCodec = "mpeg1"
-                videoCodecSelection.text = "mpeg1"
+                videoCodec = "mpeg1video"
+                videoCodecSelection.text = "mpeg1video"
                 audioCodec = "mp2"
                 audioCodecSelection.text = "mp2"
             }

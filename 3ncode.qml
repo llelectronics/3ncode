@@ -52,6 +52,7 @@ Rectangle {
         aboutView.opacity = 1
     }
     function showError(errtxt) {
+        animView.closeAnim()
         errorView.opacity = 1.0
         errorView.txt = errorView.txt + "\n" + errtxt
     }
@@ -117,9 +118,9 @@ Rectangle {
                                                  "audioBitrate": encodeItem.audioBitrate, "audioSamplingFreq": encodeItem.audioSamplingFreq,
                                                  "audioChannel": encodeItem.audioChannel, "AudioLanguageChannel": encodeItem.audioLanguageChannel,
                                                  "cmd": encodeItem.cmd});
+            outFile = outputFile;
             queueView.encodeNext();
             //encodeCmd(ffmpegCmd,outputFile);
-            outFile = outputFile;
             //showEncodeAnimaton();
         }
         onOpenFileClicked: {

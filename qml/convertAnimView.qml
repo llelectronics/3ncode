@@ -58,6 +58,12 @@ Rectangle {
         animate.stop()
     }
 
+    function closeAnim() {
+        convertAnimPage.opacity = 0
+        animText.text = outputfile ? "Encoding " + outputfile : "Encoding "
+        successImg.opacity = 0
+    }
+
     function success() {
         animationStop()
         successImg.opacity = 1
@@ -80,7 +86,7 @@ Rectangle {
         anchors.right: parent.right
         anchors.top: parent.top
         text: "X"
-        onClicked: parent.opacity = 0
+        onClicked: closeAnim();
         visible: {
             if (successImg.opacity != 0) return true
             else return false
@@ -151,7 +157,7 @@ Rectangle {
         anchors.horizontalCenter: parent.horizontalCenter
         text: qsTr("Abort Encoding")
         opacity: !openBtn.opacity
-        onClicked: rootRectangle.abortEncode()
+        onClicked: rootRectangle.abortEncode();
     }
 
     ParallelAnimation {
