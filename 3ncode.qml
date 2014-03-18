@@ -92,7 +92,7 @@ Rectangle {
         height: 32
         // TODO: Add to queue
         onClicked: {
-            console.log(text.length)
+            //console.log(text.length)
             queueView.queueList.model.append({"source": encodeItem.source,"target": encodeItem.target,"videoCodec": encodeItem.videoCodec,
                                                  "videoBitrate": encodeItem.videoBitrate, "videoResolution": encodeItem.videoResolution,
                                                  "videoAspect": encodeItem.videoAspect, "audioCodec": encodeItem.audioCodec,
@@ -112,16 +112,20 @@ Rectangle {
         anchors.leftMargin: 15
         anchors.bottomMargin: 15
         onEncodeClicked: {
-            queueView.queueList.model.append({"source": encodeItem.source,"target": encodeItem.target,"videoCodec": encodeItem.videoCodec,
-                                                 "videoBitrate": encodeItem.videoBitrate, "videoResolution": encodeItem.videoResolution,
-                                                 "videoAspect": encodeItem.videoAspect, "audioCodec": encodeItem.audioCodec,
-                                                 "audioBitrate": encodeItem.audioBitrate, "audioSamplingFreq": encodeItem.audioSamplingFreq,
-                                                 "audioChannel": encodeItem.audioChannel, "AudioLanguageChannel": encodeItem.audioLanguageChannel,
-                                                 "cmd": encodeItem.cmd});
-            outFile = outputFile;
-            queueView.encodeNext();
-            //encodeCmd(ffmpegCmd,outputFile);
-            //showEncodeAnimaton();
+            if (queueView.queueList.count == 0) {
+                queueView.queueList.model.append({"source": encodeItem.source,"target": encodeItem.target,"videoCodec": encodeItem.videoCodec,
+                                                     "videoBitrate": encodeItem.videoBitrate, "videoResolution": encodeItem.videoResolution,
+                                                     "videoAspect": encodeItem.videoAspect, "audioCodec": encodeItem.audioCodec,
+                                                     "audioBitrate": encodeItem.audioBitrate, "audioSamplingFreq": encodeItem.audioSamplingFreq,
+                                                     "audioChannel": encodeItem.audioChannel, "AudioLanguageChannel": encodeItem.audioLanguageChannel,
+                                                     "cmd": encodeItem.cmd});
+                outFile = queueView.queueList.model.get(0).target
+                queueView.encodeNext();
+                //encodeCmd(ffmpegCmd,outputFile);
+                //showEncodeAnimaton();
+            }
+            else add2Queue.clicked()
+
         }
         onOpenFileClicked: {
             openFile();

@@ -44,8 +44,8 @@ Rectangle {
 
     function encodeNext() {
         if (queueList.model.count > 0 && finished != false) {
-            rootRectangle.encodeCmd(queueList.model.get(0).cmd,queueList.model.get(0).target);
             rootRectangle.outFile = queueList.model.get(0).target;
+            rootRectangle.encodeCmd(queueList.model.get(0).cmd,queueList.model.get(0).target);
             finished = false;
         }
     }

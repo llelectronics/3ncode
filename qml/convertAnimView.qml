@@ -51,8 +51,8 @@ Rectangle {
     }
 
     function animationStart() {
+        animText.text = outputfile ? "Encoding " + outputfile : "Encoding "
         animate.start()
-        if (successImg != 0) successImg = 0
     }
     function animationStop() {
         animate.stop()
@@ -126,7 +126,8 @@ Rectangle {
         anchors.top: animLogo.bottom
         anchors.topMargin: 15
         anchors.horizontalCenter: parent.horizontalCenter
-        //width: parent.width - 25
+        width: parent.width - 25
+        horizontalAlignment: Text.AlignHCenter
         elide: Text.ElideMiddle
         font.bold: true
         text: outputfile ? "Encoding " + outputfile : "Encoding "
@@ -172,6 +173,7 @@ Rectangle {
             //easing {type: Easing.OutBack; overshoot: 500}
         }
         SequentialAnimation {
+            PropertyAction { target: successImg; property: "opacity"; value: 0 }
             PropertyAction { target: animText; property: "text"; value: animText.text }
             // Just a useless numberanimation for duration pause in text animation
             NumberAnimation { target: animText; property: "anchors.topMargin"; to: 15; duration: 1500 }
