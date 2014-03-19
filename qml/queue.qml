@@ -104,9 +104,11 @@ Rectangle {
             }
             onClicked: {
                 //console.log(queueList.model.count) //DEBUG
-                for (var i = 0; i < queueList.model.count; i++) {
-                    console.log(queueList.model.get(i).cmd)  // Run all at once
-                }
+//                for (var i = 0; i < queueList.model.count; i++) {
+//                    console.log(queueList.model.get(i).cmd)  // Run all at once
+//                }
+                rootRectangle.outFile = queueList.model.get(0).target
+                encodeNext();
             } // Might be better to run encoding process one by one and delete every entry one by one ?
         }
 
