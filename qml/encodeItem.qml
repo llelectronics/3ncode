@@ -53,7 +53,7 @@ Item {
     property alias sourceFilename: openfText.text
     property alias targetFilename: savefText.text
 
-    signal encodeClicked(string ffmpegCmd);
+    signal encodeClicked(string ffmpegCmd, string outputFile);
     signal openFileClicked();
     signal saveFileClicked(string fileName);
 
@@ -129,8 +129,8 @@ Item {
             }
             else if (format === "mpeg") {
                 activateVideo()
-                videoCodec = "mpeg1"
-                videoCodecSelection.text = "mpeg1"
+                videoCodec = "mpeg1video"
+                videoCodecSelection.text = "mpeg1video"
                 audioCodec = "mp2"
                 audioCodecSelection.text = "mp2"
             }
@@ -193,7 +193,7 @@ Item {
         }
 
         function createFFmpegCommand() {
-            var cmd = "ffmpeg -i '" + openfText.text + "'"
+            var cmd = "ffmpeg -i \"" + openfText.text + "\""
 
             // Format
             // For now we don't use format here as the detection for file extension works quite good
@@ -243,7 +243,7 @@ Item {
             }
             else {
                 // Output file
-                cmd += " '" + savefText.text + "'"
+                cmd += " \"" + savefText.text + "\""
             }
             //console.log(cmd) //DEBUG
             return cmd
@@ -317,7 +317,7 @@ Item {
         radius: 8
 
         Behavior on height {
-            NumberAnimation { duration: 500 }
+            NumberAnimation { duration: 250 }
         }
 
         Image {
@@ -340,7 +340,7 @@ Item {
             height: parent.height - 15
             anchors.verticalCenter: parent.verticalCenter
             Behavior on opacity {
-                NumberAnimation { duration: 600 }
+                NumberAnimation { duration: 300 }
             }
 
             Text {
@@ -366,7 +366,7 @@ Item {
             spacing: 25
 
             Behavior on opacity {
-                NumberAnimation { duration: 600 }
+                NumberAnimation { duration: 300 }
             }
 
             Column {
@@ -427,6 +427,7 @@ Item {
                     PlasmaComponents.CheckBox {
                         id: videoMultithreading
                         enabled: videoDeactivate.checked ? false : true
+                        checked: true // A sane default
                     }
                     Text {
                         text: "Multithreading"
@@ -541,7 +542,7 @@ Item {
                             anchors.leftMargin: 15
                             opacity: 0
                             Behavior on opacity {
-                                NumberAnimation { duration : 1800 }
+                                NumberAnimation { duration : 800 }
                             }
                             text: qsTr("Set bitrate")
                             onClicked: {
@@ -623,7 +624,7 @@ Item {
                             anchors.leftMargin: 15
                             opacity: 0
                             Behavior on opacity {
-                                NumberAnimation { duration : 1800 }
+                                NumberAnimation { duration : 800 }
                             }
                             text: qsTr("Set resolution")
                             onClicked: {
@@ -719,7 +720,7 @@ Item {
         radius: 8
 
         Behavior on height {
-            NumberAnimation { duration: 500 }
+            NumberAnimation { duration: 250 }
         }
 
         Image {
@@ -741,7 +742,7 @@ Item {
             height: parent.height - 15
             anchors.verticalCenter: parent.verticalCenter
             Behavior on opacity {
-                NumberAnimation { duration: 600 }
+                NumberAnimation { duration: 300 }
             }
 
             Text {
@@ -767,7 +768,7 @@ Item {
             spacing: 25
 
             Behavior on opacity {
-                NumberAnimation { duration: 600 }
+                NumberAnimation { duration: 300 }
             }
 
             Column {
@@ -909,7 +910,7 @@ Item {
                             anchors.leftMargin: 15
                             opacity: 0
                             Behavior on opacity {
-                                NumberAnimation { duration : 1800 }
+                                NumberAnimation { duration : 800 }
                             }
                             text: qsTr("Set bitrate")
                             onClicked: {
@@ -1027,7 +1028,7 @@ Item {
                             anchors.leftMargin: 15
                             opacity: 0
                             Behavior on opacity {
-                                NumberAnimation { duration : 1800 }
+                                NumberAnimation { duration : 800 }
                             }
                             text: qsTr("Set resolution")
                             onClicked: {
@@ -1102,7 +1103,7 @@ Item {
                             anchors.leftMargin: 15
                             opacity: 0
                             Behavior on opacity {
-                                NumberAnimation { duration : 1800 }
+                                NumberAnimation { duration : 800 }
                             }
                             text: qsTr("Set resolution")
                             onClicked: {
@@ -1194,7 +1195,7 @@ Item {
         //anchors.leftMargin: 15
         height: 0
         Behavior on height {
-            NumberAnimation { duration: 500 }
+            NumberAnimation { duration: 250 }
         }
         function toggleShow() {
             if (cmdboxRectangle.opacity == 0) {
@@ -1235,7 +1236,7 @@ Item {
             text: "<b>$</b> "
             opacity: 0
             Behavior on opacity {
-                NumberAnimation { duration: 600 }
+                NumberAnimation { duration: 500 }
             }
         }
         TextField {
@@ -1249,7 +1250,7 @@ Item {
             height: 32
             opacity: 0
             Behavior on opacity {
-                NumberAnimation { duration: 600 }
+                NumberAnimation { duration: 500 }
             }
         }
 
@@ -1269,7 +1270,7 @@ Item {
             width:140
             height: 48
             iconSource: "file://img/encode-btn.png"
-            onClicked: { encodeClicked(sourceGrid.createFFmpegCommand()) }
+            onClicked: { encodeClicked(sourceGrid.createFFmpegCommand(),savefText.text) }
             Image {
                 id: icon
                 width: 48

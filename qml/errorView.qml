@@ -35,47 +35,60 @@ import QtQuick 1.1
 import org.kde.plasma.components 0.1 as PlasmaComponents
 
 Rectangle {
-        id: aboutPage
-        width: parent.width -(parent.width/8)
-        height: 250
-        anchors.centerIn: parent
-        color: "#C4BDBB"
-        border.color: "blue"
-        border.width: 1
-        radius: 8
-        z:100  // Above all
-        opacity: 0
+    id: errorPage
+    width: parent.width -(parent.width/8)
+    height: {
+        if (errorText.paintedHeight > 250) return errorText.paintedHeight
+        else return 250
+    }
 
-        Behavior on opacity {
-            NumberAnimation { duration: 450 }
-        }
+    anchors.centerIn: parent
+    color: "#C4BDBB"
+    border.color: "blue"
+    border.width: 1
+    radius: 8
+    property alias txt: errorText.text
 
-        PlasmaComponents.Button {
+    MouseArea {
+        enabled: errorPage.opacity === 1
+        anchors.fill: errorPage
+        onClicked: { errorPage.opacity = 0 }
+    }
+
+    PlasmaComponents.Button {
             anchors.right: parent.right
             anchors.top: parent.top
             text: "X"
             onClicked: parent.opacity = 0
         }
 
-        Image {
-            id: aboutLogo
-            source: "img/encode.png"
-            x: 25
-            y: 40
-        }
-        Text {
-            id: aboutTxt
-            text: qsTr("<b>Encode 3.0</b><br />released under the terms of <b>BSD (3-clause)</b><br /> by Leszek Lesner \
-<br /><br />This application allows you<br>to encode audio and video files.<br /><br />\
-It uses the <b>ffmpeg</b><br />commandline tool as its backend.")
-            anchors.left: aboutLogo.right
-            anchors.leftMargin: 20
-            anchors.top: aboutLogo.top
-        }
-        MouseArea {
-            anchors.fill: aboutPage
-            onClicked: {
-                aboutPage.opacity = 0
-            }
+    Image {
+        id: errorLogo
+        source: "img/error.png"
+        anchors.left: parent.left
+        anchors.leftMargin: 25
+        anchors.top: parent.top
+        anchors.topMargin: 25
+        height: 64
+        width: 64
+    }
+    Flickable {
+        width: parent.width - (15 + 25 + errorLogo.width)
+        height: parent.height - (25*2)
+        anchors.left: errorLogo.right
+        anchors.leftMargin: 15
+        anchors.top: parent.top
+        anchors.topMargin: 25
+        contentHeight: errorText.paintedHeight
+        PlasmaComponents.TextArea {
+            id: errorText
+            anchors { right: parent.right; rightMargin: 8; left: parent.left; leftMargin: 8; verticalCenter: parent.verticalCenter }
+            anchors.fill: parent
+            focus: true
+            wrapMode: TextEdit.WordWrap
+            font.bold: true
+            readOnly: true
+            text: "Error occured"
         }
     }
+}

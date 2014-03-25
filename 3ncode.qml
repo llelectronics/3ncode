@@ -41,27 +41,42 @@ Rectangle {
     width: 480  // Fixed for now
     height: 575
     color: "#C4BDBB"
+    property string outFile
 
-    signal encodeCmd(string cmd)
+    signal encodeCmd(string cmd, string outputFile)
     signal openFile();
     signal saveFile(string filename);
+    signal abortEncode();
 
     function showAbout() {
         aboutView.opacity = 1
     }
+    function showError(errtxt) {
+        animView.closeAnim()
+        errorView.opacity = 1.0
+        errorView.txt = errorView.txt + "\n" + errtxt
+    }
     function showEncodeAnimaton() {
-        animView.visible=true
+        animView.opacity = 1
         animView.animationStart()
+    }
+    function successEncode() {
+        animView.success()
+        queueView.finishedEncode()
     }
     function hideEncodeAnimation() {
         animView.animationStop()
-        animView.visible=false
+        animView.opacity = 0
     }
     function sourceFilename(filename) {
         encodeItem.sourceFilename = filename
     }
     function targetFilename(filename) {
         encodeItem.targetFilename = filename
+    }
+    function showQueueButton() {
+        console.log("Show queue Button now")
+        queueButton.opacity = 1
     }
 
 
@@ -77,7 +92,7 @@ Rectangle {
         height: 32
         // TODO: Add to queue
         onClicked: {
-            console.log(text.length)
+            //console.log(text.length)
             queueView.queueList.model.append({"source": encodeItem.source,"target": encodeItem.target,"videoCodec": encodeItem.videoCodec,
                                                  "videoBitrate": encodeItem.videoBitrate, "videoResolution": encodeItem.videoResolution,
                                                  "videoAspect": encodeItem.videoAspect, "audioCodec": encodeItem.audioCodec,
@@ -97,8 +112,20 @@ Rectangle {
         anchors.leftMargin: 15
         anchors.bottomMargin: 15
         onEncodeClicked: {
-            encodeCmd(ffmpegCmd);
-            //showEncodeAnimaton();
+            if (queueView.queueList.count == 0) {
+                queueView.queueList.model.append({"source": encodeItem.source,"target": encodeItem.target,"videoCodec": encodeItem.videoCodec,
+                                                     "videoBitrate": encodeItem.videoBitrate, "videoResolution": encodeItem.videoResolution,
+                                                     "videoAspect": encodeItem.videoAspect, "audioCodec": encodeItem.audioCodec,
+                                                     "audioBitrate": encodeItem.audioBitrate, "audioSamplingFreq": encodeItem.audioSamplingFreq,
+                                                     "audioChannel": encodeItem.audioChannel, "AudioLanguageChannel": encodeItem.audioLanguageChannel,
+                                                     "cmd": encodeItem.cmd});
+                outFile = queueView.queueList.model.get(0).target
+                queueView.encodeNext();
+                //encodeCmd(ffmpegCmd,outputFile);
+                //showEncodeAnimaton();
+            }
+            else add2Queue.clicked()
+
         }
         onOpenFileClicked: {
             openFile();
@@ -174,6 +201,28 @@ Rectangle {
         }
     }
 
+    PlasmaComponents.Button {
+        id: queueButton
+        anchors.left: helpButton.right
+        anchors.leftMargin: 15
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 15
+        width:40
+        height:24
+        opacity: 0
+        Image {
+            anchors.centerIn: parent
+            width: parent.height
+            height: parent.height
+            smooth: true
+            source: "qml/img/convert.png"
+        }
+        onClicked: {
+            animView.opacity = 1
+            queueButton.opacity = 0
+        }
+    }
+
     Queue {
         id: queueView
         visible: false
@@ -185,7 +234,17 @@ Rectangle {
     }   
     ConvertAnimView {
         id: animView
-        visible: false
+        opacity: 0
+        outputfile: outFile
+    }
+    ErrorView {
+        id: errorView
+        opacity: 0
+        width: parent.width -(parent.width/8)
+        height: 250
+        Behavior on opacity {
+            NumberAnimation { target: errorView; property: "opacity"; duration: 250; easing.type: Easing.InOutQuad }
+        }
     }
 
     AboutView {

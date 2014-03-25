@@ -16,3 +16,4 @@ Queue 1.0 queue.qml
 LogView 1.0 logView.qml
 ConvertAnimView 1.0 convertAnimView.qml
 TextField 1.0 TextField.qml
+ErrorView 1.0 errorView.qml

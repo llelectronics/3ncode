@@ -9,16 +9,16 @@ global use_pyside
 
 try:
   # Try importing PyQt4 if available (i.e. on Desktop)
-  from PyQt4.QtCore import QTimer, QObject, QUrl, QCoreApplication, SIGNAL,QTranslator, QProcess, SLOT, pyqtSlot
-  from PyQt4.QtGui import QApplication, QDesktopWidget, QFileDialog
+  from PyQt4.QtCore import QTimer, QObject, QUrl, QCoreApplication, SIGNAL,QTranslator, QProcess, SLOT, pyqtSlot, QString
+  from PyQt4.QtGui import QApplication, QDesktopWidget, QFileDialog, QMessageBox
   from PyQt4.QtDeclarative import QDeclarativeView
   use_pyside = False
 except:
   print "PyQt4 failed to load, trying to use PySide instead..."
   try:
     # If PyQt4 could not be loaded use PySide (i.e. very useful for N900 and Maemo)
-    from PySide.QtCore import QTimer, QObject, QUrl, QCoreApplication, SIGNAL,QTranslator, QProcess, SLOT, pyqtSlot
-    from PySide.QtGui import QApplication, QDesktopWidget, QFileDialog
+    from PySide.QtCore import QTimer, QObject, QUrl, QCoreApplication, SIGNAL,QTranslator, QProcess, SLOT, pyqtSlot, QString
+    from PySide.QtGui import QApplication, QDesktopWidget, QFileDialog, QMessageBox
     from PySide.QtDeclarative import QDeclarativeView
     print "success."
     use_pyside = True
@@ -28,21 +28,39 @@ except:
     sys.exit(1) 
     
     
-#class MyQProcess(QProcess):     
-  #def __init__(self):    
-   ##Call base class method 
-   #QProcess.__init__(self)
+class MyQProcess(QProcess):     
+  def __init__(self):    
+   #Call base class method 
+   QProcess.__init__(self)
    
-  #@pyqtSlot()
-  #def finishEncode(self):
+  @pyqtSlot()
+  def finishEncode(self):
    #rootObject.hideEncodeAnimation()
+   #print str(outputfile)
+   if path.exists(str(outputfile)):
+     print "File encoded successfully"
+     rootObject.successEncode()
+   else:
+     print "Encoding error"
+     rootObject.showError("Encoding file " + outputfile + " failed")
    #self.close()
    
-  #@pyqtSlot()
-  #def readStdOutput(self):
-   ##print self.readAllStandardOutput()
-   ##open(home + "/encode.log","w").write(self.readAllStandardOutput()) 
-   #open(home + "/encode.log", "w").write(self.readAllStrandardError())
+  @pyqtSlot()
+  def errorEncode(self):
+   rootObject.hideEncodeAnimation()
+   rootObject.showError(QString.fromAscii(self.readAllStandardError()))
+   self.close()
+   
+  @pyqtSlot()
+  def readStdOutput(self):
+   #print self.readAllStandardOutput()
+   open(home + "/encode.log","a").write(self.readAllStandardOutput()) 
+   
+  @pyqtSlot()
+  def readStdError(self):
+   #print self.readAllStandardError()
+   rAsE = self.readAllStandardError()
+   open(home + "/encode.log", "a").write(rAsE)
     
     
 def quit():
@@ -63,26 +81,42 @@ def saveFile(filename):
   if fName.isEmpty() == False:
     rootObject.targetFilename(fName)  
     
-def encodeCmd(cmd):
+def encodeCmd(cmd,outfile):
+  # First check if outfile exists already
+  if path.exists(str(outfile)): 
+    print "File exists ask if you want to overwrite it"
+    reply = QMessageBox.question(None, 'Message',
+            "The file " + outfile + " already exists. Do you want to overwrite it ?", QMessageBox.Yes | 
+            QMessageBox.No, QMessageBox.No)
+
+    if reply == QMessageBox.Yes:
+      remove(outfile)
+    else:
+      return
+    
+  global outputfile
+  outputfile = outfile
+  
   # Write command to history file
   popen("echo \"" + str(cmd) + "\" >> ~/encode_history.log") 
   # Execute command
-  popen("xterm -T \"Encoding...\" -b 5 -e \"" + str(cmd) +  " 2>&1 | tee ~/encode.log\" &")
+  #popen("xterm -T \"Encoding...\" -b 5 -e \"" + str(cmd) +  " 2>&1 | tee ~/encode.log\" &")
+  rootObject.showEncodeAnimaton()
   # If I ever figure out how to do this I tell you
-  #cmdProcess = MyQProcess()
   #cmdProcess.setProcessChannelMode(QProcess.MergedChannels)
-  #cmdProcess.start(cmd) # + " | tee -a ~/encode.log")
-  #QObject.connect(cmdProcess,SIGNAL("finished()"),cmdProcess,SLOT("finishEncode()"))
-  #QObject.connect(cmdProcess,SIGNAL("readyReadStandardOutput()"),cmdProcess,SLOT("readStdOutput()"))
-  #cmdProcess.waitForFinished(-1)
+  #cmdProcess.startDetached(cmd) # + " | tee -a ~/encode.log")
+  # Clean the log before writing to it again
+  open(home + "/encode.log", "a").write("")
+  cmdProcess.start(cmd) # + " | tee -a ~/encode.log")
   
-
+def abortEncode():
+  cmdProcess.terminate()
 
 # Import popen to execute shell commands, 
 # path for working with standard paths 
 # ConfigParser for config handling
 # and time for time and date handling
-from os import popen, path
+from os import popen, path, remove
 #import ConfigParser, time
 home = path.expanduser("~")
 
@@ -109,6 +143,17 @@ if len(sys.argv) > 1:
 rootObject.openFile.connect(openFile)
 rootObject.saveFile.connect(saveFile)
 rootObject.encodeCmd.connect(encodeCmd)
+rootObject.abortEncode.connect(abortEncode)
+
+# Create encode process
+cmdProcess = MyQProcess()
+QObject.connect(cmdProcess,SIGNAL("finished(int)"),cmdProcess,SLOT("finishEncode()"))
+QObject.connect(cmdProcess,SIGNAL("readyReadStandardOutput()"),cmdProcess,SLOT("readStdOutput()"))
+QObject.connect(cmdProcess,SIGNAL("readyReadStandardError()"),cmdProcess,SLOT("readStdError()"))
+QObject.connect(cmdProcess,SIGNAL("error()"),cmdProcess,SLOT("errorEncode()"))
+
+# Outputfile
+outputfile = QString("empty")
 
 # Display the user interface and allow the user to interact with it.
 view.setGeometry(0, 0, 480, 575)
