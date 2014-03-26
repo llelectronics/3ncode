@@ -42,6 +42,7 @@ Rectangle {
     height: 575
     color: "#C4BDBB"
     property string outFile
+    property string homeDir
 
     signal encodeCmd(string cmd, string outputFile)
     signal openFile();
@@ -77,6 +78,9 @@ Rectangle {
     function showQueueButton() {
         console.log("Show queue Button now")
         queueButton.opacity = 1
+    }
+    function setHomeDir(dir) {
+        homeDir = dir
     }
 
 
@@ -181,7 +185,7 @@ Rectangle {
             icon: QIcon("documentation")
             // TODO show History here
             onClicked: {
-                logViewer.readTxt("/home/leszek/encode_history.log")
+                logViewer.readTxt(homeDir + "/encode_history.log")
                 logViewer.visible = true
             }
         }
@@ -190,7 +194,7 @@ Rectangle {
             icon: QIcon("text-x-changelog")
             // TODO show Log here
             onClicked: {
-                logViewer.readTxt("/home/leszek/encode.log")
+                logViewer.readTxt(homeDir + "/encode.log")
                 logViewer.visible = true
             }
         }

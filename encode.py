@@ -145,6 +145,9 @@ rootObject.saveFile.connect(saveFile)
 rootObject.encodeCmd.connect(encodeCmd)
 rootObject.abortEncode.connect(abortEncode)
 
+# Set home dir in qml
+rootObject.setHomeDir(home)
+
 # Create encode process
 cmdProcess = MyQProcess()
 QObject.connect(cmdProcess,SIGNAL("finished(int)"),cmdProcess,SLOT("finishEncode()"))
