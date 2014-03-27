@@ -17,3 +17,5 @@ LogView 1.0 logView.qml
 ConvertAnimView 1.0 convertAnimView.qml
 TextField 1.0 TextField.qml
 ErrorView 1.0 errorView.qml
+TextArea 1.0 TextArea.qml
+ScrollBar 1.0 ScrollBar.qml

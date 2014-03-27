@@ -166,7 +166,7 @@ Rectangle {
             icon: QIcon("terminal")
             onClicked: {
                 if (encodeItem.cmdbox.height == 0) {
-                    encodeItem.cmdbox.height = 40
+                    encodeItem.cmdbox.height = 80
                 }
                 else {
                     encodeItem.cmdbox.height = 0

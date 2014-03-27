@@ -1,3 +1,1 @@
-* Add 'video' 'audio' for deactivate option 
-* Use textArea for commandline view
 * Add blacklist for unallowed codec options (e.g. h263 does not support 1280x720 video resolution in 3gp)

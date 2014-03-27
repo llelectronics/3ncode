@@ -351,6 +351,7 @@ Item {
             Text { // codec, resolution, bitrate, aspect ratio
                 anchors.left: parent.left
                 anchors.leftMargin: 15
+                width: summaryVideoRectangle.width
                 text: videoDeactivate.checked ? "" : "<b>Codec:</b> " + videoCodec + " <b>Bitrate:</b> " + videoBitrate + " <b>Resolution:</b> " +
                                                 videoResolution + " <b>Aspect:</b> " + videoAspect
             }
@@ -397,7 +398,7 @@ Item {
                         id: videoDeactivate
                     }
                     Text {
-                        text: "Deactivate"
+                        text: "Deactivate Video"
                         anchors.verticalCenter: videoDeactivate.verticalCenter
                         enabled: videoDeactivate.enabled
                         MouseArea {
@@ -799,7 +800,7 @@ Item {
                         id: audioDeactivate
                     }
                     Text {
-                        text: "Deactivate"
+                        text: "Deactivate Audio"
                         anchors.verticalCenter: audioDeactivate.verticalCenter
                         MouseArea {
                             anchors.fill: parent
@@ -1239,7 +1240,7 @@ Item {
                 NumberAnimation { duration: 500 }
             }
         }
-        TextField {
+        TextArea {
             id: cmdText
             anchors.left: cmdLabel.right
             anchors.leftMargin: 5
@@ -1247,7 +1248,7 @@ Item {
             placeholderText: qsTr("FFmpeg command here")
             text: sourceGrid.createFFmpegCommand()
             width: parent.width - 32
-            height: 32
+            height: 64
             opacity: 0
             Behavior on opacity {
                 NumberAnimation { duration: 500 }
