@@ -353,7 +353,7 @@ Item {
                 anchors.leftMargin: 15
                 width: summaryVideoRectangle.width
                 text: videoDeactivate.checked ? "" : "<b>Codec:</b> " + videoCodec + " <b>Bitrate:</b> " + videoBitrate + " <b>Resolution:</b> " +
-                                                videoResolution + " <b>Aspect:</b> " + videoAspect
+                                                videoResolution + "<br /><b>Aspect:</b> " + videoAspect
             }
         } // Grid Summary Video
         Row {
