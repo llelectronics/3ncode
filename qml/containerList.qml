@@ -98,6 +98,10 @@ PlasmaComponents.ContextMenu {
         onClicked: formatChanged(text)
     }
     PlasmaComponents.MenuItem {
+        text: qsTr("flac")
+        onClicked: formatChanged(text)
+    }
+    PlasmaComponents.MenuItem {
         text: qsTr("mp2")
         onClicked: formatChanged(text)
     }

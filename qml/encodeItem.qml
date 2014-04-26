@@ -161,6 +161,11 @@ Item {
                 audioCodec = "ac3"
                 audioCodecSelection.text = "ac3"
             }
+            else if (format === "flac") {
+                deactivateVideo()
+                audioCodec = "flac"
+                audioCodecSelection.text = "flac"
+            }
             else if (format === "mp2") {
                 deactivateVideo()
                 audioCodec = "mp2"
