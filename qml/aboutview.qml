@@ -65,7 +65,7 @@ Rectangle {
         }
         Text {
             id: aboutTxt
-            text: qsTr("<b>Encode 3.0</b><br />released under the terms of <b>BSD (3-clause)</b><br /> by Leszek Lesner \
+            text: qsTr("<b>Encode 3.0</b><br />released under the terms of <br /><b>BSD (3-clause)</b><br /> by Leszek Lesner \
 <br /><br />This application allows you<br>to encode audio and video files.<br /><br />\
 It uses the <b>ffmpeg</b><br />commandline tool as its backend.")
             anchors.left: aboutLogo.right
