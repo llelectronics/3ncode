@@ -161,6 +161,7 @@ outputfile = QString("empty")
 
 # Display the user interface and allow the user to interact with it.
 view.setGeometry(0, 0, 480, 575)
+view.setFixedSize(480, 575) 
 view.setWindowTitle(QCoreApplication.translate(None, 'Encode'))
 screen = QDesktopWidget().screenGeometry()
 size =  view.geometry()
