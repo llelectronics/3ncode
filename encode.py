@@ -1,8 +1,8 @@
 #!/usr/bin/python
 # ################################
-# MAGI 2 - QMLViewer for N9
+# Encode 3
 # by Leszek Lesner
-# released under the terms of GPLv3
+# released under the terms of BSD (3-clause)
 # ################################ 
 import sys
 global use_pyside
@@ -37,7 +37,7 @@ class MyQProcess(QProcess):
   def finishEncode(self):
    #rootObject.hideEncodeAnimation()
    #print str(outputfile)
-   if path.exists(str(outputfile)):
+   if path.exists(unicode(outputfile.toUtf8(), "utf-8")) and (cmdProcess.exitCode() == 0 or cmdProcess.exitCode() == 255):
      print "File encoded successfully"
      rootObject.successEncode()
    else:
@@ -66,6 +66,9 @@ class MyQProcess(QProcess):
 def quit():
   sys.exit(0)
   
+def openLog():
+  popen("xdg-open " + home + "/encode.log")
+  
 def openFile():
   transObj = QObject()
   fName = QFileDialog.getOpenFileName(None, transObj.tr("Open media file"), home, transObj.tr("Media Files (*.mp4 *.avi *.mp3 *.wav *.ogg *.flv *.ogv *.m4v *.m4a *.aac *.flac *.webm *.mpg *.mpeg *.wmv *.wma *.mp2 *.mov *.oga *.aif *.aiff *.aifc *.ape *.mka *.asf *.3gp *.dv *.m2t *.mts *.ts *.divx *.nsv *.ogm)"))
@@ -83,14 +86,14 @@ def saveFile(filename):
     
 def encodeCmd(cmd,outfile):
   # First check if outfile exists already
-  if path.exists(str(outfile)): 
+  if path.exists(unicode(outfile.toUtf8(), "utf-8")): 
     print "File exists ask if you want to overwrite it"
     reply = QMessageBox.question(None, 'Message',
             "The file " + outfile + " already exists. Do you want to overwrite it ?", QMessageBox.Yes | 
             QMessageBox.No, QMessageBox.No)
 
     if reply == QMessageBox.Yes:
-      remove(outfile)
+      remove(unicode(outfile.toUtf8(), "utf-8"))
     else:
       return
     
@@ -98,7 +101,7 @@ def encodeCmd(cmd,outfile):
   outputfile = outfile
   
   # Write command to history file
-  popen("echo \"" + str(cmd) + "\" >> ~/encode_history.log") 
+  popen("echo \"" + unicode(cmd.toUtf8(), "utf-8").encode("utf-8") + "\" >> ~/encode_history.log") 
   # Execute command
   #popen("xterm -T \"Encoding...\" -b 5 -e \"" + str(cmd) +  " 2>&1 | tee ~/encode.log\" &")
   rootObject.showEncodeAnimaton()
@@ -138,13 +141,14 @@ rootObject = view.rootObject()
 
 # Check for parameters
 if len(sys.argv) > 1:
-  openF(sys.argv[1])
+  openF(str(sys.argv[1]).decode('utf-8'))
 
 # Connect QML signals with Python functions
 rootObject.openFile.connect(openFile)
 rootObject.saveFile.connect(saveFile)
 rootObject.encodeCmd.connect(encodeCmd)
 rootObject.abortEncode.connect(abortEncode)
+rootObject.openLogClicked.connect(openLog)
 
 # Set home dir in qml
 rootObject.setHomeDir(home)

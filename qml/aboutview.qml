@@ -39,7 +39,7 @@ Rectangle {
         width: parent.width -(parent.width/8)
         height: 250
         anchors.centerIn: parent
-        color: "#C4BDBB"
+        color: parent.color
         border.color: "blue"
         border.width: 1
         radius: 8

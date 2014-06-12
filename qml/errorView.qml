@@ -41,9 +41,11 @@ Rectangle {
         if (errorText.paintedHeight > 250) return errorText.paintedHeight
         else return 250
     }
+    
+    signal openLogClicked()
 
     anchors.centerIn: parent
-    color: "#C4BDBB"
+    color: parent.color
     border.color: "blue"
     border.width: 1
     radius: 8
@@ -73,8 +75,9 @@ Rectangle {
         width: 64
     }
     Flickable {
+        id: flick
         width: parent.width - (15 + 25 + errorLogo.width)
-        height: parent.height - (25*2)
+        height: parent.height - (25*3)
         anchors.left: errorLogo.right
         anchors.leftMargin: 15
         anchors.top: parent.top
@@ -91,4 +94,12 @@ Rectangle {
             text: "Error occured"
         }
     }
+    PlasmaComponents.Button {
+            anchors.right: parent.right
+            anchors.rightMargin: 25
+            anchors.top: flick.bottom
+            anchors.topMargin: 15
+            text: qsTr("Open Log")
+            onClicked: openLogClicked()
+        }
 }
