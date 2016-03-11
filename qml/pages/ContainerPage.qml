@@ -62,8 +62,21 @@ Dialog {
             onClicked: {
                 if (title.indexOf("---") !== 0) {
                     dataContainer.container = title
-                    if (type === "audio") dataContainer.isAudioOnly = true
-                    else dataContainer.isAudioOnly = false
+                    if (type !== "audio") {
+                        // Set default video here
+                        dataContainer.isAudioOnly = false
+                        dataContainer.vcodec = vcodec
+                        dataContainer.vbitrate = vbitrate
+                        dataContainer.resolution = resolution
+                        dataContainer.aspect = aspect
+                    }
+                    else dataContainer.isAudioOnly = true
+                    // Set default audio here
+                    dataContainer.acodec = acodec
+                    dataContainer.abitrate = abitrate
+                    dataContainer.channel = channel
+                    dataContainer.samplerate = sample
+                    dataContainer.lang = lang
                     pageStack.pop();
                 }
             }
