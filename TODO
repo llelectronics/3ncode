@@ -1,1 +1,0 @@
-* Add blacklist for unallowed codec options (e.g. h263 does not support 1280x720 video resolution in 3gp)
