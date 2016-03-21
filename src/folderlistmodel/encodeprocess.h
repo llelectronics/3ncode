@@ -21,7 +21,6 @@ public slots:
 
 private:
     QString mCmd;
-    void
 };
 
 #endif // ENCODEPROCESS_H
