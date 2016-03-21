@@ -16,7 +16,8 @@ CONFIG += sailfishapp
 
 SOURCES += src/harbour-encode.cpp \
     src/folderlistmodel/fileinfothread.cpp \
-    src/folderlistmodel/qquickfolderlistmodel.cpp
+    src/folderlistmodel/qquickfolderlistmodel.cpp \
+    src/folderlistmodel/encodeprocess.cpp
 
 OTHER_FILES += qml/harbour-encode.qml \
     qml/cover/CoverPage.qml \
@@ -48,5 +49,6 @@ DISTFILES += \
 HEADERS += \
     src/folderlistmodel/fileinfothread_p.h \
     src/folderlistmodel/fileproperty_p.h \
-    src/folderlistmodel/qquickfolderlistmodel.h
+    src/folderlistmodel/qquickfolderlistmodel.h \
+    src/folderlistmodel/encodeprocess.h
 

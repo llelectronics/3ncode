@@ -53,6 +53,65 @@ Page {
     property string sourceFile
     property string targetFile
 
+    onSourceFileChanged: {
+        targetFile = sourceFile.substr(0, sourceFile.lastIndexOf('.')) + "." + container.value || sourceFile;
+    }
+
+    onContainerChanged: {
+        targetFile = sourceFile.substr(0, sourceFile.lastIndexOf('.')) + "." + container.value || sourceFile;
+    }
+
+    function createFFmpegCommand() {
+        var cmd = "ffmpeg -i \"" + sourceFile + "\""
+
+        // Audio conversions first
+        // example ffmpeg cmd:
+        // ffmpeg -i ''  -vn -ab 128k -ar 44100 -b 2000k -f wav -vcodec libxvid -ac 2 -acodec pcm_s16le '.wav'
+        if (isAudioOnly) {
+            cmd += " -vn"
+        }
+        cmd += " -ab " + abitrate
+        cmd += " -ar " + samplerate
+        cmd += " -ac " + channel
+        cmd += " -acodec " + acodec
+        if (lang != "not set") {
+            cmd += " -map 0:" + audioLanguageChannel
+        }
+
+        //Video conversions second
+        //example ffmpeg cmd:
+        // ffmpeg -i ''  -ab 128k -ar 44100 -b 2000k -f avi -vcodec libxvid -ac 2 -acodec libmp3lame '.avi'
+        if (!isAudioOnly) {
+            cmd += " -b " + vbitrate
+            cmd += " -vcodec " + vcodec
+            if (resolution != "no change") {
+                cmd += " -s " + resolution
+            }
+            if (aspect != "no change") {
+                cmd += " -aspect " + aspect
+            }
+            // Always optimal thread usage
+            cmd += " -threads 0"
+
+        }
+
+        // 2 Pass makes no sense on a mobile phone as the CPUs are usually painfully slow
+//        if (video2pass.checked) {
+//            cmdpass1 = cmd + " -y -pass 1"
+//            cmdpass1 += " \"" + savefText.text + "\""
+//            cmdpass2 = cmd + " -y -pass 2"
+//            cmdpass2 += " \"" + savefText.text + "\""
+//            // 2 Pass Output file
+//            cmd = cmdpass1 + " && " + cmdpass2
+//        }
+//        else {
+            // Output file
+            cmd += " \"" + targetFile + "\""
+//        }
+        //console.log(cmd) //DEBUG
+        return cmd
+    }
+
 
     // To enable PullDownMenu, place our content in a SilicaFlickable
     SilicaFlickable {
@@ -213,6 +272,7 @@ Page {
                 text: qsTr("Encode")
                 preferredWidth: parent.width - (Theme.paddingLarge * 2)
                 anchors.horizontalCenter: parent.horizontalCenter
+                enabled: (sourceFile != "" && targetFile != "" && container.value != "") ? true : false
                 Image {
                     anchors.left: parent.left
                     anchors.leftMargin: Theme.paddingLarge
@@ -220,6 +280,12 @@ Page {
                     source: "image://theme/icon-m-shuffle"
                     height: parent.height - Theme.paddingSmall
                     width: height
+                }
+                onClicked: {
+                    busy.running = true
+                    busy.visible = true
+                    statusText = qsTr("Encoding file.\nThis might take a while...")
+                    console.debug("Encode ffmpeg command: " + createFFmpegCommand())
                 }
             }
         }
