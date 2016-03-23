@@ -34,6 +34,7 @@
 
 #include <sailfishapp.h>
 #include "folderlistmodel/qquickfolderlistmodel.h"
+#include "encodeprocess.h"
 
 
 int main(int argc, char *argv[])
@@ -48,6 +49,7 @@ int main(int argc, char *argv[])
     // To display the view, call "show()" (will show fullscreen on device).
 
     qmlRegisterType<QQuickFolderListModel>("harbour.encode.Encode", 1, 0, "FolderListModel");
+    qmlRegisterType<encodeProcess>("harbour.encode.Encode", 1, 0, "EncodeProcess");
 
     return SailfishApp::main(argc, argv);
 }

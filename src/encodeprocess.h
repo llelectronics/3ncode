@@ -15,16 +15,20 @@ public:
     Q_PROPERTY(QString cmd READ cmd WRITE setCmd)
     QString cmd() { return mCmd; }
     Q_INVOKABLE bool setCmd(const QString &cmd);
+    Q_PROPERTY(QString errorOutput READ errorOutput)
+    QString errorOutput() { return mErrorOutput; }
+    Q_INVOKABLE void runFFmpeg();
 
 signals:
     void error();
     void success();
 
 public slots:
-    void runFFmpeg();
+    void getffmpegOutput(int exitCode);
 
 private:
     QString mCmd;
+    QString mErrorOutput;
     QProcess ffmpegProc;
 };
 

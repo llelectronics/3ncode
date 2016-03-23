@@ -30,7 +30,7 @@
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0
-
+import harbour.encode.Encode 1.0
 
 Page {
     id: page
@@ -62,7 +62,7 @@ Page {
     }
 
     function createFFmpegCommand() {
-        var cmd = "ffmpeg -i \"" + sourceFile + "\""
+        var cmd = " -i \"" + sourceFile + "\""
 
         // Audio conversions first
         // example ffmpeg cmd:
@@ -286,6 +286,8 @@ Page {
                     busy.visible = true
                     statusText = qsTr("Encoding file.\nThis might take a while...")
                     console.debug("Encode ffmpeg command: " + createFFmpegCommand())
+                    encodeProcess.cmd = createFFmpegCommand();
+                    encodeProcess.runFFmpeg();
                 }
             }
         }
@@ -301,6 +303,78 @@ Page {
                 pageStack.pop();
             }
         }
+    }
+    EncodeProcess {
+        id: encodeProcess
+    }
+
+    Connections {
+        target: encodeProcess
+        onSuccess: {
+            busy.running = false
+            busy.visible = false
+            isSuccess = true
+            statusText = qsTr("Encoding successful. File saved to ") + targetFile
+        }
+
+        onError: {
+            busy.running = false
+            isError = true
+            if (encodeProcess.errorOutput != "") {
+                statusText = encodeProcess.errorOutput
+            }
+        }
+    }
+
+    Rectangle {
+        color: "black"
+        opacity: 0.60
+        anchors.fill: parent
+        visible: {
+            if (busy.running) return true;
+            else if (isError) return true;
+            else if (isSuccess) return true;
+            else return false;
+        }
+    }
+    BusyIndicator {
+        id: busy
+        anchors.centerIn: parent
+        size: BusyIndicatorSize.Large
+        running: false
+        visible: false
+    }
+    Image {
+        id: successImg
+        source: "image://theme/icon-l-acknowledge"
+        width: Theme.itemSizeLarge
+        height: width
+        anchors.centerIn: parent
+        visible: isSuccess
+    }
+    Label {
+        id: statusLbl
+        text: statusText
+        anchors.top: {
+            if (busy.running) busy.bottom
+            else if (isSuccess) successImg.bottom
+            else parent.top
+        }
+        anchors.bottomMargin: Theme.paddingLarge
+        font.pixelSize: Theme.fontSizeMedium
+        anchors.horizontalCenter: firstPage.verticalCenter
+        width: parent.width
+        visible: busy.running || isError || isSuccess
+        wrapMode: TextEdit.WordWrap
+    }
+    Button {
+        id: dismissBtn
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: Theme.paddingMedium
+        anchors.horizontalCenter: parent.horizontalCenter
+        text: qsTr("Dismiss")
+        onClicked: { isError = false; isSuccess = false; }
+        visible: isError || isSuccess
     }
 }
 

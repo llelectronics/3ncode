@@ -70,6 +70,14 @@
 This might take a while...</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Dismiss</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Encoding successful. File saved to </source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>OpenDialog</name>

@@ -40,40 +40,15 @@ ApplicationWindow
     property string appicon: "img/harbour-encode.png"
     property var firstPage
     property string statusText
+    property bool isError
+    property bool isSuccess
 
     property color highlightedColor: Theme.rgba(Theme.highlightBackgroundColor, Theme.highlightBackgroundOpacity)
 
     initialPage: Component { FirstPage { Component.onCompleted: mainWindow.firstPage = this } }
-    cover: Qt.resolvedUrl("cover/CoverPage.qml")
+    cover: undefined //Qt.resolvedUrl("cover/CoverPage.qml")
     allowedOrientations: Orientation.All
     _defaultPageOrientations: Orientation.All
-
-    Rectangle {
-        color: "black"
-        opacity: 0.60
-        anchors.fill: parent
-        visible: {
-            if (busy.running) return true;
-//            else if (errTxt.visible) return true;
-            else return false;
-        }
-    }
-    BusyIndicator {
-        id: busy
-        anchors.centerIn: parent
-        size: BusyIndicatorSize.Large
-        running: false
-        visible: false
-    }
-    Label {
-        id: statusLbl
-        text: statusText
-        anchors.top: busy.bottom
-        anchors.bottomMargin: Theme.paddingLarge
-        font.pixelSize: Theme.fontSizeMedium
-        anchors.horizontalCenter: firstPage.verticalCenter
-    }
-
 }
 
 
