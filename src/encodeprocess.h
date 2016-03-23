@@ -2,6 +2,10 @@
 #define ENCODEPROCESS_H
 
 #include <QObject>
+#include <QFile>
+#include <QProcess>
+#include <QString>
+#include <QDebug>
 
 class encodeProcess : public QObject
 {
@@ -21,6 +25,7 @@ public slots:
 
 private:
     QString mCmd;
+    QProcess ffmpegProc;
 };
 
 #endif // ENCODEPROCESS_H
