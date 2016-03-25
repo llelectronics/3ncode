@@ -44,7 +44,10 @@ DISTFILES += \
     qml/pages/AboutPage.qml \
     qml/pages/ContainerPage.qml \
     qml/pages/ContainerModel.qml \
-    qml/pages/OpenDialog.qml
+    qml/pages/OpenDialog.qml \
+    qml/pages/DetailsSettings.qml \
+    qml/pages/VCodecMenu.qml \
+    qml/pages/ACodecMenu.qml
 
 HEADERS += \
     src/folderlistmodel/fileinfothread_p.h \

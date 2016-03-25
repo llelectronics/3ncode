@@ -15,7 +15,7 @@ void encodeProcess::runFFmpeg()
 {
     QString appPath("/usr/share/harbour-encode/");
     QString appName("ffmpeg_static");
-    ffmpegProc.start(appPath+appName + " " + mCmd);
+    ffmpegProc.start(appPath+appName + " -y " + mCmd); // -y to always overwrite and not ask
     connect(&ffmpegProc, SIGNAL(finished(int)), this, SLOT(getffmpegOutput(int)));
 }
 

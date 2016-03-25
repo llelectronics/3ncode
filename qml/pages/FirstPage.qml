@@ -70,7 +70,7 @@ Page {
         if (isAudioOnly) {
             cmd += " -vn"
         }
-        cmd += " -ab " + abitrate
+        cmd += " -ab " + abitrate + "k"
         cmd += " -ar " + samplerate
         cmd += " -ac " + channel
         cmd += " -acodec " + acodec
@@ -82,7 +82,7 @@ Page {
         //example ffmpeg cmd:
         // ffmpeg -i ''  -ab 128k -ar 44100 -b 2000k -f avi -vcodec libxvid -ac 2 -acodec libmp3lame '.avi'
         if (!isAudioOnly) {
-            cmd += " -b " + vbitrate
+            cmd += " -b " + vbitrate + "k"
             cmd += " -vcodec " + vcodec
             if (resolution != "no change") {
                 cmd += " -s " + resolution
@@ -164,6 +164,7 @@ Page {
 
                 width: parent.width
                 height: vColumn.height + vLbl.height
+                onClicked: pageStack.push(Qt.resolvedUrl("DetailsSettings.qml"), { dataContainer: page } )
                 Label {
                     id: vLbl
                     text: qsTr("Video")
@@ -185,7 +186,7 @@ Page {
                     }
                     Label {
                         id: vBitrateLbl
-                        text: qsTr("Bitrate: ") + vbitrate
+                        text: qsTr("Bitrate: ") + vbitrate + "k"
                         font.pixelSize: Theme.fontSizeSmall
                         color: Theme.secondaryColor
                     }
@@ -216,6 +217,7 @@ Page {
                 id: audioItem
                 height: aColumn.height + aLbl.height
 
+                onClicked: pageStack.push(Qt.resolvedUrl("DetailsSettings.qml"), { dataContainer: page, isAudioDialog: true } )
                 Label {
                     id: aLbl
                     text: qsTr("Audio")
@@ -236,7 +238,7 @@ Page {
                     }
                     Label {
                         id: aBitrateLbl
-                        text: qsTr("Bitrate: ") + abitrate
+                        text: qsTr("Bitrate: ") + abitrate + "k"
                         font.pixelSize: Theme.fontSizeSmall
                         color: Theme.secondaryColor
                     }
@@ -314,7 +316,7 @@ Page {
             busy.running = false
             busy.visible = false
             isSuccess = true
-            statusText = qsTr("Encoding successful. File saved to ") + targetFile
+            statusText = qsTr("Encoding successful.\nFile saved to ") + targetFile
         }
 
         onError: {
@@ -336,6 +338,10 @@ Page {
             else if (isSuccess) return true;
             else return false;
         }
+        MouseArea {
+            anchors.fill: parent
+            // Just to catch all clicks
+        }
     }
     BusyIndicator {
         id: busy
@@ -352,8 +358,9 @@ Page {
         anchors.centerIn: parent
         visible: isSuccess
     }
-    Label {
+    TextArea {
         id: statusLbl
+        background: null
         text: statusText
         anchors.top: {
             if (busy.running) busy.bottom
@@ -362,10 +369,11 @@ Page {
         }
         anchors.bottomMargin: Theme.paddingLarge
         font.pixelSize: Theme.fontSizeMedium
-        anchors.horizontalCenter: firstPage.verticalCenter
         width: parent.width
+        height: busy.running ? (parent.height / 3) : (parent.height - dismissBtn.height - Theme.paddingLarge * 2)
         visible: busy.running || isError || isSuccess
         wrapMode: TextEdit.WordWrap
+        readOnly: true
     }
     Button {
         id: dismissBtn
@@ -375,6 +383,14 @@ Page {
         text: qsTr("Dismiss")
         onClicked: { isError = false; isSuccess = false; }
         visible: isError || isSuccess
+    }
+    IconButton {
+        icon.source: "image://theme/icon-m-play"
+        anchors.bottom: successImg.top
+        anchors.bottomMargin: Theme.paddingMedium
+        visible: isSuccess
+        anchors.horizontalCenter: parent.horizontalCenter
+        onClicked: Qt.openUrlExternally(targetFile)
     }
 }
 

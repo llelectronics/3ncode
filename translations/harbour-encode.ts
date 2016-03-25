@@ -16,6 +16,57 @@
     </message>
 </context>
 <context>
+    <name>DetailsSettings</name>
+    <message>
+        <source>Audio Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Video Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Codec:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Bitrate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set bitrate in kbps</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Channel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set number of available channels</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sampling Frequency:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Language Channel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set language channel number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Resolution:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Aspect:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>FirstPage</name>
     <message>
         <source>Open File</source>
@@ -75,7 +126,8 @@ This might take a while...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Encoding successful. File saved to </source>
+        <source>Encoding successful.
+File saved to </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
