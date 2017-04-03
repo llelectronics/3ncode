@@ -91,7 +91,7 @@ PlasmaComponents.ContextMenu {
         onClicked: resolutionChanged(text)
     }
     PlasmaComponents.MenuItem {
-        text: qsTr("1980x1080")
+        text: qsTr("1920x1080")
         onClicked: resolutionChanged(text)
     }
     PlasmaComponents.MenuItem {
