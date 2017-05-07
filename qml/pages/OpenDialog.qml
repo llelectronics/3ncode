@@ -79,19 +79,20 @@ Page {
 
             function remove() {
                 var removal = removalComponent.createObject(delegate)
-                removal.execute(dItem,qsTr("Deleting ") + fileName, function() { _fm.remove(filePath); })
+                if (fileIsDir) removal.execute(dItem,qsTr("Deleting ") + fileName, function() { _fm.removeDir(filePath); })
+                else removal.execute(dItem,qsTr("Deleting ") + fileName, function() { _fm.remove(filePath); })
             }
 
             Item {
                 id: dItem
-                anchors.fill: parent                
+                anchors.fill: parent
 
                 Image
                 {
                     id: fileIcon
                     anchors.left: parent.left
                     anchors.leftMargin: Theme.paddingSmall
-                    anchors.verticalCenter: parent.verticalCenter
+                    y: fileDetailsLbl.visible ? ((fileNameLbl.height + fileNameLbl.y + fileDetailsLbl.height) / 2) - height / 2  : ((fileNameLbl.height + fileNameLbl.y) / 2) - height / 2
                     source: {
                         if (fileIsDir) "image://theme/icon-m-folder"
                         else if (_fm.getMime(filePath).indexOf("video") !== -1) "image://theme/icon-m-file-video"
@@ -135,7 +136,7 @@ Page {
                     anchors.rightMargin: Theme.paddingMedium
                 }
                 Component.onCompleted: {
-                    if (!fileDetailsLbl.visible) fileNameLbl.anchors.verticalCenter = dItem.verticalCenter
+                    if (!fileDetailsLbl.visible) fileNameLbl.anchors.verticalCenter = fileIcon.verticalCenter
                     else fileNameLbl.anchors.top = dItem.top
                 }
             }
