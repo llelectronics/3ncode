@@ -5,7 +5,14 @@
     <name>AboutPage</name>
     <message>
         <source>An app to encode audio&amp;video files based on ffmpeg.</source>
-        <translation type="unfinished"></translation>
+        <translation>Eine Anwendung zum Konvertieren von Audio&amp;Video Dateien basierend auf ffmpeg.</translation>
+    </message>
+</context>
+<context>
+    <name>ContainerPage</name>
+    <message>
+        <source>Choose Container</source>
+        <translation>Container wählen</translation>
     </message>
 </context>
 <context>
@@ -19,122 +26,136 @@
     <name>DetailsSettings</name>
     <message>
         <source>Audio Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Audio Einstellungen</translation>
     </message>
     <message>
         <source>Video Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Video Einstellungen</translation>
     </message>
     <message>
         <source>Codec:</source>
-        <translation type="unfinished"></translation>
+        <translation>Codec:</translation>
     </message>
     <message>
         <source>Bitrate</source>
-        <translation type="unfinished"></translation>
+        <translation>Bitrate</translation>
     </message>
     <message>
         <source>Set bitrate in kbps</source>
-        <translation type="unfinished"></translation>
+        <translation>Bitrate in kbps</translation>
     </message>
     <message>
         <source>Channel</source>
-        <translation type="unfinished"></translation>
+        <translation>Kanal</translation>
     </message>
     <message>
         <source>Set number of available channels</source>
-        <translation type="unfinished"></translation>
+        <translation>Anzahl der Kanäle</translation>
     </message>
     <message>
         <source>Sampling Frequency:</source>
-        <translation type="unfinished"></translation>
+        <translation>Abtastrate:</translation>
     </message>
     <message>
         <source>Language Channel</source>
-        <translation type="unfinished"></translation>
+        <translation>Sprachkanal</translation>
     </message>
     <message>
         <source>Set language channel number</source>
-        <translation type="unfinished"></translation>
+        <translation>Sprachkanalnummer</translation>
     </message>
     <message>
         <source>Resolution:</source>
-        <translation type="unfinished"></translation>
+        <translation>Auflösung:</translation>
     </message>
     <message>
         <source>Aspect:</source>
-        <translation type="unfinished"></translation>
+        <translation>Bildverhältnis:</translation>
     </message>
 </context>
 <context>
     <name>FirstPage</name>
     <message>
         <source>Open File</source>
-        <translation type="unfinished"></translation>
+        <translation>Datei öffnen</translation>
     </message>
     <message>
         <source>Encode</source>
-        <translation type="unfinished"></translation>
+        <translation>Encode</translation>
     </message>
     <message>
         <source>Video</source>
-        <translation type="unfinished"></translation>
+        <translation>Video</translation>
     </message>
     <message>
         <source>Codec: </source>
-        <translation type="unfinished"></translation>
+        <translation>Codec: </translation>
     </message>
     <message>
         <source>Bitrate: </source>
-        <translation type="unfinished"></translation>
+        <translation>Bitrate: </translation>
     </message>
     <message>
         <source>Resolution: </source>
-        <translation type="unfinished"></translation>
+        <translation>Auflösung: </translation>
     </message>
     <message>
         <source>Aspect Ratio: </source>
-        <translation type="unfinished"></translation>
+        <translation>Bildverhältnis: </translation>
     </message>
     <message>
         <source>Audio</source>
-        <translation type="unfinished"></translation>
+        <translation>Audio</translation>
     </message>
     <message>
         <source>Channel(s): </source>
-        <translation type="unfinished"></translation>
+        <translation>Kanäle: </translation>
     </message>
     <message>
         <source>Language: </source>
-        <translation type="unfinished"></translation>
+        <translation>Sprache: </translation>
     </message>
     <message>
         <source>Samplerate: </source>
-        <translation type="unfinished"></translation>
+        <translation>Abtastrate: </translation>
     </message>
     <message>
         <source>Target Container:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ziel-Container:</translation>
     </message>
     <message>
         <source>Encoding file.
 This might take a while...</source>
-        <translation type="unfinished"></translation>
+        <translation>Datei wird konvertiert.
+Dies kann eine Weile dauern...</translation>
     </message>
     <message>
         <source>Dismiss</source>
-        <translation type="unfinished"></translation>
+        <translation>Ausblenden</translation>
     </message>
     <message>
         <source>Encoding successful.
 File saved to </source>
-        <translation type="unfinished"></translation>
+        <translation>Konvertierung erfolgreich.
+Datei wurde gespeichert nach </translation>
+    </message>
+    <message>
+        <source>About </source>
+        <translation>Über </translation>
     </message>
 </context>
 <context>
     <name>OpenDialog</name>
     <message>
         <source>Open file</source>
+        <translation>Datei öffnen</translation>
+    </message>
+    <message>
+        <source>Deleting </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

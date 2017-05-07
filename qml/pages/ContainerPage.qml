@@ -43,7 +43,7 @@ Dialog {
         anchors.fill: parent
         model: containerModel
         header: PageHeader {
-            title: "Choose Container"
+            title: qsTr("Choose Container")
         }
         delegate: ListItem {
             Label {

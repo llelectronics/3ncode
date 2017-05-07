@@ -120,7 +120,7 @@ Page {
         // PullDownMenu and PushUpMenu must be declared in SilicaFlickable, SilicaListView or SilicaGridView
         PullDownMenu {
             MenuItem {
-                text: qsTr("About " + appname)
+                text: qsTr("About ") + appname
                 onClicked: pageStack.push(Qt.resolvedUrl("AboutPage.qml"))
             }
             MenuItem {
@@ -302,7 +302,7 @@ Page {
             onOpenFile: {
                 //console.debug("Try loading playlist " + path);
                 sourceFile = path;
-                pageStack.pop();
+                pageStack.pop(page);
             }
         }
     }

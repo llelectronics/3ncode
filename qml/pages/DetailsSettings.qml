@@ -39,6 +39,7 @@ Dialog {
     property bool isAudioDialog: false
 
     onAccepted: {
+        if (lang.text == "") lang.text = "not set"
         if (dataContainer) {
             if (isAudioDialog) {
                 dataContainer.acodec = codec.value
@@ -122,6 +123,7 @@ Dialog {
                 text: isAudioDialog ? dataContainer.abitrate : dataContainer.vbitrate
                 validator: IntValidator { }
                 width: parent.width
+                inputMethodHints: Qt.ImhDigitsOnly
             }
             TextField {
                 id: channel
@@ -132,6 +134,7 @@ Dialog {
                 text: dataContainer.channel
                 validator: IntValidator { }
                 width: parent.width
+                inputMethodHints: Qt.ImhDigitsOnly
             }
             ComboBox {
                 id: sample
@@ -170,6 +173,7 @@ Dialog {
                 text: dataContainer.lang
                 validator: IntValidator { }
                 width: parent.width
+                inputMethodHints: Qt.ImhDigitsOnly
             }
             ComboBox {
                 id: resolution

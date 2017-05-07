@@ -15,7 +15,7 @@ Page {
         id: fileModel
         folder: path
         showDirsFirst: true
-        showDotAndDotDot: true
+        showDotAndDotDot: false
         showOnlyReadable: true
         nameFilters: filter
     }
@@ -38,6 +38,7 @@ Page {
 
         header: PageHeader {
             title: qsTr("Open file")
+            description: path.toString()
         }
 
         PullDownMenu {
@@ -64,19 +65,56 @@ Page {
         delegate: BackgroundItem {
             id: delegate
             width: parent.width
-            height: fileDetailsLbl.visible ? fileNameLbl.height + fileDetailsLbl.height : Theme.itemSizeSmall
+            //height: fileDetailsLbl.visible ? fileNameLbl.height + fileDetailsLbl.height : Theme.itemSizeSmall
+            property var dHeight: fileDetailsLbl.visible ? fileNameLbl.height + fileDetailsLbl.height : Theme.itemSizeSmall
+            height: menuOpen ? contextMenu.height + dHeight : dHeight
+            property Item contextMenu
+            property bool menuOpen: contextMenu != null && contextMenu.parent === delegate
+
+            function showContextMenu() {
+                if (!contextMenu)
+                    contextMenu = myMenu.createObject(view)
+                contextMenu.show(delegate)
+            }
+
+            function remove() {
+                var removal = removalComponent.createObject(delegate)
+                removal.execute(dItem,qsTr("Deleting ") + fileName, function() { _fm.remove(filePath); })
+            }
 
             Item {
                 id: dItem
-                anchors.fill: parent
+                anchors.fill: parent                
+
+                Image
+                {
+                    id: fileIcon
+                    anchors.left: parent.left
+                    anchors.leftMargin: Theme.paddingSmall
+                    anchors.verticalCenter: parent.verticalCenter
+                    source: {
+                        if (fileIsDir) "image://theme/icon-m-folder"
+                        else if (_fm.getMime(filePath).indexOf("video") !== -1) "image://theme/icon-m-file-video"
+                        else if (_fm.getMime(filePath).indexOf("audio") !== -1) "image://theme/icon-m-file-audio"
+                        else if (_fm.getMime(filePath).indexOf("image") !== -1) "image://theme/icon-m-file-image"
+                        else if (_fm.getMime(filePath).indexOf("text") !== -1) "image://theme/icon-m-file-document"
+                        else if (_fm.getMime(filePath).indexOf("pdf") !== -1) "image://theme/icon-m-file-pdf"
+                        else if (_fm.getMime(filePath).indexOf("android") !== -1) "image://theme/icon-m-file-apk"
+                        else if (_fm.getMime(filePath).indexOf("rpm") !== -1) "image://theme/icon-m-file-rpm"
+                        else "image://theme/icon-m-document"
+                    }
+                    //                    Component.onCompleted: {
+                    //                        console.debug("File " + fileName + " has mimetype: " + _fm.getMime(filePath))
+                    //                    }
+                }
 
                 Label {
                     id: fileNameLbl
                     text: fileName + (fileIsDir ? "/" : "")
                     color: delegate.highlighted ? Theme.highlightColor : Theme.primaryColor
                     wrapMode: Text.WordWrap
-                    width: parent.width - (Theme.paddingMedium * 2)
-                    anchors.left: parent.left
+                    width: parent.width - (fileIcon.width + Theme.paddingMedium * 2)
+                    anchors.left: fileIcon.right
                     anchors.leftMargin: Theme.paddingMedium
                     anchors.right: parent.right
                     anchors.rightMargin: Theme.paddingMedium
@@ -90,8 +128,8 @@ Page {
                     text: getReadableFileSizeString(fileSize) + ", " + fileModified
                     color: Theme.secondaryColor
                     truncationMode: TruncationMode.Fade
-                    width: parent.width - (Theme.paddingMedium * 2)
-                    anchors.left: parent.left
+                    width: parent.width - (fileIcon.width + Theme.paddingMedium * 2)
+                    anchors.left: fileIcon.right
                     anchors.leftMargin: Theme.paddingMedium
                     anchors.right: parent.right
                     anchors.rightMargin: Theme.paddingMedium
@@ -104,11 +142,30 @@ Page {
 
             onClicked: {
                 if (fileIsDir) {
-                    if (fileName === "..") fileModel.folder = fileModel.parentFolder
-                    else if (fileName === ".") return
-                    else fileModel.folder = filePath
+                    var anotherFM = pageStack.push(Qt.resolvedUrl("OpenDialog.qml"), {"path": filePath});
+                    anotherFM.openFile.connect(openFile)
                 } else {
                     openFile(filePath)
+                }
+            }
+            onPressAndHold: showContextMenu()
+            Component {
+                id: removalComponent
+                RemorseItem {
+                    id: remorse
+                    onCanceled: destroy()
+                }
+            }
+
+            Component {
+                id: myMenu
+                ContextMenu {
+                    MenuItem {
+                        text: qsTr("Delete")
+                        onClicked: {
+                            delegate.remove();
+                        }
+                    }
                 }
             }
         }

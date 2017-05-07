@@ -35,7 +35,12 @@
 #include <sailfishapp.h>
 #include "folderlistmodel/qquickfolderlistmodel.h"
 #include "encodeprocess.h"
+#include "fmhelper.hpp"
 
+#include <QQuickView>
+#include <QQmlEngine>
+#include <QQmlContext>
+#include <QGuiApplication>
 
 int main(int argc, char *argv[])
 {
@@ -48,9 +53,19 @@ int main(int argc, char *argv[])
     //
     // To display the view, call "show()" (will show fullscreen on device).
 
+    QGuiApplication *app = SailfishApp::application(argc, argv);
+
     qmlRegisterType<QQuickFolderListModel>("harbour.encode.Encode", 1, 0, "FolderListModel");
     qmlRegisterType<encodeProcess>("harbour.encode.Encode", 1, 0, "EncodeProcess");
 
-    return SailfishApp::main(argc, argv);
+    QQuickView *view = SailfishApp::createView(); // I get a white background with this.
+    view->setSource(SailfishApp::pathTo("qml/harbour-encode.qml"));  // So I do this ;)
+
+    FM *fileAction = new FM();
+    view->engine()->rootContext()->setContextProperty("_fm", fileAction);
+
+    view->show();
+
+    return app->exec();
 }
 

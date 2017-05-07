@@ -9,6 +9,13 @@
     </message>
 </context>
 <context>
+    <name>ContainerPage</name>
+    <message>
+        <source>Choose Container</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>CoverPage</name>
     <message>
         <source>My Cover</source>
@@ -130,11 +137,23 @@ This might take a while...</source>
 File saved to </source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>About </source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>OpenDialog</name>
     <message>
         <source>Open file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Deleting </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

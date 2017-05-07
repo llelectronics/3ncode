@@ -56,15 +56,6 @@ Page {
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignHCenter
             }
-            Repeater{
-                anchors.horizontalCenter: parent.horizontalCenter
-                model: credits
-                Label  {
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    text: title
-                    font.pixelSize: Theme.fontSizeSmall
-                }
-            }
             Rectangle{
                 gradient: Gradient {
                     GradientStop { position: 0.0; color: "#333333" }
