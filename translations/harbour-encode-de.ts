@@ -174,5 +174,25 @@ Datei wurde gespeichert nach </translation>
         <source>Error pasting file </source>
         <translation>Fehler beim Einfügen von Datei </translation>
     </message>
+    <message>
+        <source>Show Filesystem Root</source>
+        <translation>Wurzelverzeichnis anzeigen</translation>
+    </message>
+    <message>
+        <source>Show Home</source>
+        <translation>Homeverzeichnis anzeigen</translation>
+    </message>
+    <message>
+        <source>Show Android SDCard</source>
+        <translation>Android SDCard anzeigen</translation>
+    </message>
+    <message>
+        <source>Show SDCard</source>
+        <translation>SDCard anzeigen</translation>
+    </message>
+    <message>
+        <source>directory</source>
+        <translation>Ordner</translation>
+    </message>
 </context>
 </TS>

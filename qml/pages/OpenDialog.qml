@@ -55,19 +55,19 @@ Page {
 
         PullDownMenu {
             MenuItem {
-                text: "Show Filesystem Root"
+                text: qsTr("Show Filesystem Root")
                 onClicked: fileModel.folder = "/";
             }
             MenuItem {
-                text: "Show Home"
+                text: qsTr("Show Home")
                 onClicked: fileModel.folder = "/home/nemo";
             }
             MenuItem {
-                text: "Show Android SDCard"
+                text: qsTr("Show Android SDCard")
                 onClicked: fileModel.folder = "/data/sdcard";
             }
             MenuItem {
-                text: "Show SDCard"
+                text: qsTr("Show SDCard")
                 onClicked: fileModel.folder = "/media/sdcard";
                 //visible: Util.existsPath("/media/sdcard")
                 //Component.onCompleted: console.debug("[DirList] SD Card status: " + Util.existsPath("/media/sdcard"))
@@ -157,7 +157,7 @@ Page {
 
                 Label {
                     id: fileNameLbl
-                    text: fileName + (fileIsDir ? "/" : "")
+                    text: fileName
                     color: delegate.highlighted ? Theme.highlightColor : Theme.primaryColor
                     wrapMode: Text.WordWrap
                     width: parent.width - (fileIcon.width + Theme.paddingMedium * 2)
@@ -171,8 +171,7 @@ Page {
                 Label {
                     id: fileDetailsLbl
                     anchors.top: fileNameLbl.bottom
-                    visible: !fileIsDir
-                    text: getReadableFileSizeString(fileSize) + ", " + fileModified
+                    text:  fileIsDir ? qsTr("directory") : getReadableFileSizeString(fileSize) + ", " + fileModified
                     color: Theme.secondaryColor
                     truncationMode: TruncationMode.Fade
                     width: parent.width - (fileIcon.width + Theme.paddingMedium * 2)
