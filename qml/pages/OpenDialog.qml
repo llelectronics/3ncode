@@ -31,6 +31,18 @@ Page {
         return Math.max(fileSizeInBytes, 0.1).toFixed(1) + byteUnits[i];
     }
 
+    function findBaseName(url) {
+        url = url.toString();
+        var fileName = url.substring(url.lastIndexOf('/') + 1);
+        return fileName;
+    }
+
+    function findFullPath(url) {
+        url = url.toString();
+        var fullPath = url.substring(url.lastIndexOf('://') + 3);
+        return fullPath;
+    }
+
     SilicaListView {
         id: view
         model: fileModel
@@ -60,6 +72,29 @@ Page {
                 //visible: Util.existsPath("/media/sdcard")
                 //Component.onCompleted: console.debug("[DirList] SD Card status: " + Util.existsPath("/media/sdcard"))
             }
+            MenuItem {
+                id: pasteMenuEntry
+                visible: { if (_fm.sourceUrl != "" && _fm.sourceUrl != undefined) return true;
+                    else return false
+                }
+                text: qsTr("Paste") + "(" + findBaseName(_fm.sourceUrl) + ")"
+                onClicked: {
+                    var err = false;
+                    if (_fm.moveMode) {
+                        console.debug("Moving " + _fm.sourceUrl + " to " + findFullPath(fileModel.folder)+ "/" + findBaseName(_fm.sourceUrl));
+                        if (!_fm.moveFile(_fm.sourceUrl,findFullPath(fileModel.folder) + "/" + findBaseName(_fm.sourceUrl))) err = true;
+                    }
+                    else {
+                        //console.debug("Copy " + _fm.sourceUrl + " to " + findFullPath(fileModel.folder)+ "/" + findBaseName(_fm.sourceUrl));
+                        if (!_fm.copyFile(_fm.sourceUrl,findFullPath(fileModel.folder) + "/" + findBaseName(_fm.sourceUrl))) err = true;
+                    }
+                    if (err) {
+                        var message = "Error pasting file " + _fm.sourceUrl
+                        console.debug(message);
+                    }
+                    else _fm.sourceUrl = "";
+                }
+            }
         }
 
         delegate: BackgroundItem {
@@ -81,6 +116,16 @@ Page {
                 var removal = removalComponent.createObject(delegate)
                 if (fileIsDir) removal.execute(dItem,qsTr("Deleting ") + fileName, function() { _fm.removeDir(filePath); })
                 else removal.execute(dItem,qsTr("Deleting ") + fileName, function() { _fm.remove(filePath); })
+            }
+
+            function copy() {
+                _fm.sourceUrl = filePath
+                //console.debug(_fm.sourceUrl)
+            }
+
+            function move() {
+                _fm.moveMode = true;
+                copy();
             }
 
             Item {
@@ -162,6 +207,18 @@ Page {
                 id: myMenu
                 ContextMenu {
                     MenuItem {
+                        text: qsTr("Cut")
+                        onClicked: {
+                            delegate.move();
+                        }
+                    }
+                    MenuItem {
+                        text: qsTr("Copy")
+                        onClicked: {
+                            delegate.copy();
+                        }
+                    }
+                    MenuItem {
                         text: qsTr("Delete")
                         onClicked: {
                             delegate.remove();
@@ -171,5 +228,14 @@ Page {
             }
         }
         VerticalScrollDecorator { flickable: view }
+    }
+    Connections {
+        target: _fm
+        onSourceUrlChanged: {
+            if (_fm.sourceUrl != "" && _fm.sourceUrl != undefined) {
+                pasteMenuEntry.visible = true;
+            }
+            else pasteMenuEntry.visible = false;
+        }
     }
 }
