@@ -36,7 +36,7 @@ ApplicationWindow
 {
     id: mainWindow
     property string appname: "Encode"
-    property string version: "1.0"
+    property string version: "1.1"
     property string appicon: "img/harbour-encode.png"
     property var firstPage
     property string statusText
@@ -49,6 +49,11 @@ ApplicationWindow
     cover: undefined //Qt.resolvedUrl("cover/CoverPage.qml")
     allowedOrientations: Orientation.All
     _defaultPageOrientations: Orientation.All
+
+    InfoBanner {
+        id: infoBanner
+        z:1
+    }
 }
 
 

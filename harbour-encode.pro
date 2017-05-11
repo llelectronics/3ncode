@@ -47,7 +47,8 @@ DISTFILES += \
     qml/pages/OpenDialog.qml \
     qml/pages/DetailsSettings.qml \
     qml/pages/VCodecMenu.qml \
-    qml/pages/ACodecMenu.qml
+    qml/pages/ACodecMenu.qml \
+    qml/pages/InfoBanner.qml
 
 HEADERS += \
     src/folderlistmodel/fileinfothread_p.h \
