@@ -5,7 +5,14 @@
     <name>AboutPage</name>
     <message>
         <source>An app to encode audio&amp;video files based on ffmpeg.</source>
-        <translation>En app för att koda om ljud- &amp; filmfiler baserat på ffmpeg.</translation>
+        <translation>En app för att koda om ljud- &amp; filmfiler baserad på ffmpeg.</translation>
+    </message>
+</context>
+<context>
+    <name>ContainerPage</name>
+    <message>
+        <source>Choose Container</source>
+        <translation>Välj behållare</translation>
     </message>
 </context>
 <context>
@@ -132,6 +139,10 @@ File saved to </source>
         <translation>Omkodning slutförd.
 Filen sparad i </translation>
     </message>
+    <message>
+        <source>About </source>
+        <translation>Om </translation>
+    </message>
 </context>
 <context>
     <name>OpenDialog</name>
@@ -139,5 +150,50 @@ Filen sparad i </translation>
         <source>Open file</source>
         <translation>Öppna fil</translation>
     </message>
+    <message>
+        <source>Deleting </source>
+        <translation>Tar bort </translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation>Ta bort</translation>
+    </message>
+    <message>
+        <source>Paste</source>
+        <translation>Paste</translation>
+    </message>
+    <message>
+        <source>Cut</source>
+        <translation>Cut</translation>
+    </message>
+    <message>
+        <source>Copy</source>
+        <translation>Kopiera</translation>
+    </message>
+    <message>
+        <source>Error pasting file </source>
+        <translation>Kunde inte klistra in </translation>
+    </message>
+    <message>
+        <source>Show Filesystem Root</source>
+        <translation>Visa filsystemets root</translation>
+    </message>
+    <message>
+        <source>Show Home</source>
+        <translation>Visa Home</translation>
+    </message>
+    <message>
+        <source>Show Android SDCard</source>
+        <translation>Visa Android SD-kort</translation>
+    </message>
+    <message>
+        <source>Show SDCard</source>
+        <translation>Visa SD-kort</translation>
+    </message>
+    <message>
+        <source>directory</source>
+        <translation>mapp</translation>
+    </message>
 </context>
 </TS>
+
