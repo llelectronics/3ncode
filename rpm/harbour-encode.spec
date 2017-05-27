@@ -14,7 +14,7 @@ Name:       harbour-encode
 %{?qtc_builddir:%define _builddir %qtc_builddir}
 Summary:    An app to encode audio&video files
 Version:    1.1
-Release:    1
+Release:    2
 Group:      Qt/Qt
 License:    LICENSE
 URL:        http://example.org/
@@ -59,6 +59,8 @@ cp ../harbour-encode/ffmpeg_static_arm %{buildroot}/usr/share/%{name}/ffmpeg_sta
 echo "Include ffmpeg for i486"
 cp ../harbour-encode/ffmpeg_static_i486 %{buildroot}/usr/share/%{name}/ffmpeg_static
 %endif
+echo "Make sure ffmpeg_static is executable"
+chmod +x %{buildroot}/usr/share/%{name}/ffmpeg_static
 # >> install pre
 # << install pre
 %qmake5_install
