@@ -82,8 +82,8 @@ Item {
                 activateVideo()
                 videoCodec = "libx264"
                 videoCodecSelection.text = "libx264"
-                audioCodec = "libfaac"
-                audioCodecSelection.text = "libfaac"
+                audioCodec = "aac"
+                audioCodecSelection.text = "aac"
             }
             else if (format === "ogv") {
                 activateVideo()
@@ -124,8 +124,8 @@ Item {
                 activateVideo()
                 videoCodec = "mpeg4"
                 videoCodecSelection.text = "mpeg4"
-                audioCodec = "libfaac"
-                audioCodecSelection.text = "libfaac"
+                audioCodec = "aac"
+                audioCodecSelection.text = "aac"
             }
             else if (format === "mpeg") {
                 activateVideo()
@@ -143,8 +143,8 @@ Item {
             }
             else if (format === "aac") {
                 deactivateVideo()
-                audioCodec = "libfaac"
-                audioCodecSelection.text = "libfaac"
+                audioCodec = "aac"
+                audioCodecSelection.text = "aac"
             }
             else if (format === "mp3") {
                 deactivateVideo()
@@ -760,7 +760,7 @@ Item {
                 anchors.left: parent.left
                 anchors.leftMargin: 15
                 text: audioDeactivate.checked ? "" : "<b>Codec:</b> " + audioCodec + " <b>Bitrate:</b> " + audioBitrate + " <b>Sampling Freq:</b> " +
-                                                audioSamplingFreq + " <b>Channel:</b> " + audioChannel + " <br /><b>Language Channel:</b> " + audioLanguageChannel
+                                                audioSamplingFreq + " <br /><b>Channel:</b> " + audioChannel + " <br /><b>Language Channel:</b> " + audioLanguageChannel
             }
         } // Grid Summary Audio
         Row {

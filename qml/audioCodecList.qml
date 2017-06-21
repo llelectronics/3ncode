@@ -51,7 +51,7 @@ PlasmaComponents.ContextMenu {
         onClicked: codecChanged(text)
     }
     PlasmaComponents.MenuItem {
-        text: qsTr("libfaac")
+        text: qsTr("aac")
         onClicked: codecChanged(text)
     }
     PlasmaComponents.MenuItem {
