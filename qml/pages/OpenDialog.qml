@@ -51,6 +51,20 @@ Page {
         header: PageHeader {
             title: qsTr("Open file")
             description: path.toString()
+            MouseArea {
+                anchors.fill: parent
+                onClicked: {
+                    if (filter == mainWindow.videoFilter) {
+                        //console.debug("Disable filter show all files") ;
+                        filter = ["*"]
+                        parent.description = path.toString() + " [*]"
+                    }
+                    else {
+                        filter = mainWindow.videoFilter
+                        parent.description = path.toString()
+                    }
+                }
+            }
         }
 
         PullDownMenu {

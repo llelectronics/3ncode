@@ -298,7 +298,7 @@ Page {
         id: openFileComponent
         OpenDialog {
             path: StandardPaths.videos
-            filter: ["*.mp4", "*.mp3", "*.mkv", "*.ogg", "*.ogv", "*.flac", "*.wav", "*.m4a", "*.flv", "*.webm", "*.oga", "*.avi", "*.mov", "*.3gp", "*.mpg", "*.mpeg", "*.wmv", "*.wma", "*.dv", "*.m2v", "*.asf", "*.nsv"]
+            filter: mainWindow.videoFilter
             onOpenFile: {
                 //console.debug("Try loading playlist " + path);
                 sourceFile = path;
