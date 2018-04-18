@@ -53,9 +53,10 @@ Page {
     property string sourceFile
     property string targetFile
 
+    property int i: 0
+
     onSourceFileChanged: {
         targetFile = sourceFile.substr(0, sourceFile.lastIndexOf('.')) + "." + container.value || sourceFile;
-        var i=0;
         while (targetFile == sourceFile) {
             i = i+1
             targetFile = sourceFile.substr(0, sourceFile.lastIndexOf('.')) + "."+i+"." + container.value || sourceFile;
@@ -64,7 +65,6 @@ Page {
 
     onContainerChanged: {
         targetFile = sourceFile.substr(0, sourceFile.lastIndexOf('.')) + "." + container.value || sourceFile;
-        var i=0;
         while (targetFile == sourceFile) {
             i = i+1
             targetFile = sourceFile.substr(0, sourceFile.lastIndexOf('.')) + "."+i+"." + container.value || sourceFile;
