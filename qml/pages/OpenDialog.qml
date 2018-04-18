@@ -184,7 +184,7 @@ Page {
 
             onClicked: {
                 if (fileIsDir) {
-                    var anotherFM = pageStack.push(Qt.resolvedUrl("OpenDialog.qml"), {"path": filePath});
+                    var anotherFM = pageStack.push(Qt.resolvedUrl("OpenDialog.qml"), {"path": filePath, "filter": filter});
                     anotherFM.openFile.connect(openFile)
                 } else {
                     openFile(filePath)
