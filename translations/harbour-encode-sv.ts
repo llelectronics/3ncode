@@ -5,7 +5,7 @@
     <name>AboutPage</name>
     <message>
         <source>An app to encode audio&amp;video files based on ffmpeg.</source>
-        <translation>En app för att koda om ljud- &amp; filmfiler baserad på ffmpeg.</translation>
+        <translation>En app för att koda om ljud- &amp; filmfiler baserat på ffmpeg.</translation>
     </message>
 </context>
 <context>
@@ -160,11 +160,11 @@ Filen sparad i </translation>
     </message>
     <message>
         <source>Paste</source>
-        <translation>Paste</translation>
+        <translation>Klistra in</translation>
     </message>
     <message>
         <source>Cut</source>
-        <translation>Cut</translation>
+        <translation>Klipp ut</translation>
     </message>
     <message>
         <source>Copy</source>
@@ -196,7 +196,7 @@ Filen sparad i </translation>
     </message>
     <message>
         <source>File operation succeeded</source>
-        <translation type="unfinished"></translation>
+        <translation>Filoperationen lyckades</translation>
     </message>
 </context>
 </TS>
