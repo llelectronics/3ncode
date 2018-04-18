@@ -194,6 +194,9 @@ Filen sparad i </translation>
         <source>directory</source>
         <translation>mapp</translation>
     </message>
+    <message>
+        <source>File operation succeeded</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>
-

@@ -196,7 +196,7 @@ Datei wurde gespeichert nach </translation>
     </message>
     <message>
         <source>File operation succeeded</source>
-        <translation type="unfinished"></translation>
+        <translation>Datei Operation erfolgreich</translation>
     </message>
 </context>
 </TS>
