@@ -188,6 +188,7 @@ Dialog {
                     MenuItem { text: "854x480" }
                     MenuItem { text: "1280x720" }
                     MenuItem { text: "1920x1080" }
+                    MenuItem { text: "4096×3112" }
                 }
                 currentIndex: {
                     if (dataContainer.resolution == "no change") return 0
@@ -197,6 +198,7 @@ Dialog {
                     else if (dataContainer.resolution == "854x480") return 4
                     else if (dataContainer.resolution == "1280x720") return 5
                     else if (dataContainer.resolution == "1920x1080") return 6
+                    else if (dataContainer.resolution == "4096×3112") return 6
                 }
             }
             ComboBox {

@@ -79,21 +79,17 @@ Page {
                 }
                 text: qsTr("Paste") + "(" + findBaseName(_fm.sourceUrl) + ")"
                 onClicked: {
-                    var err = false;
+                    busyInd.running = true
                     if (_fm.moveMode) {
-                        console.debug("Moving " + _fm.sourceUrl + " to " + findFullPath(fileModel.folder)+ "/" + findBaseName(_fm.sourceUrl));
-                        if (!_fm.moveFile(_fm.sourceUrl,findFullPath(fileModel.folder) + "/" + findBaseName(_fm.sourceUrl))) err = true;
+                        //console.debug("Moving " + _fm.sourceUrl + " to " + findFullPath(fileModel.folder)+ "/" + findBaseName(_fm.sourceUrl));
+                        //if (!_fm.moveFile(_fm.sourceUrl,findFullPath(fileModel.folder) + "/" + findBaseName(_fm.sourceUrl))) err = true;
+                        _fm.moveFile(_fm.sourceUrl,findFullPath(fileModel.folder) + "/" + findBaseName(_fm.sourceUrl))
                     }
                     else {
                         //console.debug("Copy " + _fm.sourceUrl + " to " + findFullPath(fileModel.folder)+ "/" + findBaseName(_fm.sourceUrl));
-                        if (!_fm.copyFile(_fm.sourceUrl,findFullPath(fileModel.folder) + "/" + findBaseName(_fm.sourceUrl))) err = true;
+                        //if (!_fm.copyFile(_fm.sourceUrl,findFullPath(fileModel.folder) + "/" + findBaseName(_fm.sourceUrl))) err = true;
+                        _fm.copyFile(_fm.sourceUrl,findFullPath(fileModel.folder) + "/" + findBaseName(_fm.sourceUrl))
                     }
-                    if (err) {
-                        var message = qsTr("Error pasting file ") + _fm.sourceUrl
-                        console.debug(message);
-                        infoBanner.showText(message)
-                    }
-                    else _fm.sourceUrl = "";
                 }
             }
         }
@@ -237,5 +233,31 @@ Page {
             }
             else pasteMenuEntry.visible = false;
         }
+        onCpResultChanged: {
+            if (!_fm.cpResult) {
+                var message = qsTr("Error pasting file ") + _fm.sourceUrl
+                console.debug(message);
+                mainWindow.infoBanner.parent = parent
+                mainWindow.infoBanner.anchors.top = parent.top
+                infoBanner.showText(message)
+            }
+            else {
+                _fm.sourceUrl = "";
+                var message = qsTr("File operation succeeded")
+                console.debug(message);
+//                mainWindow.infoBanner.parent = parent
+//                mainWindow.infoBanner.anchors.top = parent.top
+                infoBanner.showText(message)
+            }
+            busyInd.running = false;
+        }
+    }
+
+    BusyIndicator {
+        id: busyInd
+        anchors.top: parent.top
+        anchors.topMargin: Theme.paddingLarge
+        anchors.left: parent.left
+        anchors.leftMargin: Theme.paddingLarge
     }
 }
