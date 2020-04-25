@@ -312,7 +312,8 @@ Page {
             onOpenFile: {
                 //console.debug("Try loading playlist " + path);
                 sourceFile = path;
-                pageStack.replace(Qt.resolvedUrl("ContainerPage.qml"), {dataContainer: page});
+                pageStack.pop(page, PageStackAction.Immediate);
+                pageStack.push(Qt.resolvedUrl("ContainerPage.qml"), {dataContainer: page});
             }
         }
     }
