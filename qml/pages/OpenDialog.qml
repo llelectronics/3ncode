@@ -161,22 +161,25 @@ Page {
             }
             MenuItem {
                 id: pasteMenuEntry
-                visible: { if (_fm.sourceUrl != "" && _fm.sourceUrl != undefined) return true;
-                    else return false
+                visible: clipboard.count > 0
+                text: {
+                    var pasteTxt = qsTr("Paste") + " ("
+                    if (clipboard.count > 1)
+                        pasteTxt += clipboard.count + qsTr(" Files")
+                    else if (clipboard.count === 1)
+                        pasteTxt += clipboard.get(0).name
+                    pasteTxt += ")"
+                    return pasteTxt
                 }
-                text: qsTr("Paste") + "(" + findBaseName(_fm.sourceUrl) + ")"
                 onClicked: {
                     busyInd.running = true
-                    if (_fm.moveMode) {
-                        //console.debug("Moving " + _fm.sourceUrl + " to " + findFullPath(fileModel.folder)+ "/" + findBaseName(_fm.sourceUrl));
-                        //if (!_fm.moveFile(_fm.sourceUrl,findFullPath(fileModel.folder) + "/" + findBaseName(_fm.sourceUrl))) err = true;
-                        _fm.moveFile(_fm.sourceUrl,findFullPath(fileModel.folder) + "/" + findBaseName(_fm.sourceUrl))
+                    _fm.resetWatcher();
+                    for (var i=0; i<clipboard.count; i++) {
+                        console.log("Copying " + clipboard.get(i).source + " to " + findFullPath(fileModel.folder) + "/" + clipboard.get(i).name);
+                        _fm.copyFile(clipboard.get(i).source,findFullPath(fileModel.folder) + "/" + clipboard.get(i).name)
                     }
-                    else {
-                        //console.debug("Copy " + _fm.sourceUrl + " to " + findFullPath(fileModel.folder)+ "/" + findBaseName(_fm.sourceUrl));
-                        //if (!_fm.copyFile(_fm.sourceUrl,findFullPath(fileModel.folder) + "/" + findBaseName(_fm.sourceUrl))) err = true;
-                        _fm.copyFile(_fm.sourceUrl,findFullPath(fileModel.folder) + "/" + findBaseName(_fm.sourceUrl))
-                    }
+                    clipboard.clear();
+                    refresh();
                 }
             }
             MenuItem {
@@ -212,13 +215,15 @@ Page {
             }
 
             function copy() {
-                _fm.sourceUrl = filePath
-                //console.debug(_fm.sourceUrl)
+                clipboard.clear();
+                _fm.moveMode = false;
+                clipboard.add(filePath, fileName);
             }
 
             function move() {
+                clipboard.clear();
                 _fm.moveMode = true;
-                copy();
+                clipboard.add(filePath, fileName);
             }
 
             Item {

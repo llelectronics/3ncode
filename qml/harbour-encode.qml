@@ -51,6 +51,31 @@ ApplicationWindow
     allowedOrientations: Orientation.All
     _defaultPageOrientations: Orientation.All
 
+    // Helper for copying and moving files in OpenDialog
+    ListModel {
+        id: clipboard
+        //        ListElement {
+        //            source: "path/to/filename"
+        //              name: "filename"
+        //        }
+        function add(path,name) {
+            if (!contains(path)) append({"source":path, "name": name});
+        }
+        function rm(path) {
+            for (var i=0; i<count; i++) {
+                if (get(i).source === path) remove(i);
+            }
+        }
+        function contains(path) {
+            for (var i=0; i<count; i++) {
+                if (get(i).source == path)  {
+                    return true;
+                }
+            }
+            return false;
+        }
+    }
+
     InfoBanner {
         id: infoBanner
         z:1
