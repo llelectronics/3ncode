@@ -351,6 +351,24 @@ Page {
             }
             busyInd.running = false;
         }
+        onRmResultChanged: {
+            console.log("rmResult: " + _fm.rmResult);
+            if (!_fm.rmResult) {
+                var message = qsTr("Error deleting file(s)")
+                console.debug(message);
+                mainWindow.infoBanner.parent = page
+                mainWindow.infoBanner.anchors.top = page.top
+                infoBanner.showText(message)
+            }
+            else {
+                var message = qsTr("File deletion succeeded")
+                console.debug(message);
+                mainWindow.infoBanner.parent = page
+                mainWindow.infoBanner.anchors.top = page.top
+                infoBanner.showText(message)
+            }
+            busyInd.running = false;
+        }
     }
 
     BusyIndicator {
