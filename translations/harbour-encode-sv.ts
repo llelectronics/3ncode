@@ -6,7 +6,7 @@
     <message id="components_gallery-la-image-loading-failed">
         <source>Oops, can&apos;t display the image</source>
         <extracomment>Image loading failed</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Hoppsan, kan inte visa bilden</translation>
     </message>
 </context>
 <context>
@@ -34,23 +34,23 @@
     <name>CreateDirDialog</name>
     <message>
         <source>Error creating new directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Kan inte skapa ny mapp</translation>
     </message>
     <message>
         <source>Create Folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Skapa mapp</translation>
     </message>
     <message>
         <source>Create</source>
-        <translation type="unfinished"></translation>
+        <translation>Skapa</translation>
     </message>
     <message>
         <source>Create a new folder under</source>
-        <translation type="unfinished"></translation>
+        <translation>Skapa ny mapp under</translation>
     </message>
     <message>
         <source>Folder name</source>
-        <translation type="unfinished"></translation>
+        <translation>Mappnamn</translation>
     </message>
 </context>
 <context>
@@ -108,82 +108,82 @@
     <name>FileItemDelegate</name>
     <message>
         <source>Deleting </source>
-        <translation type="unfinished">Tar bort </translation>
+        <translation>Tar bort </translation>
     </message>
     <message>
         <source>Select</source>
-        <translation type="unfinished"></translation>
+        <translation>Välj</translation>
     </message>
     <message>
         <source>Cut</source>
-        <translation type="unfinished">Klipp ut</translation>
+        <translation>Klipp ut</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation type="unfinished">Kopiera</translation>
+        <translation>Kopiera</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation type="unfinished">Ta bort</translation>
+        <translation>Ta bort</translation>
     </message>
     <message>
         <source>Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Egenskaper</translation>
     </message>
 </context>
 <context>
     <name>FileProperties</name>
     <message>
         <source>Open with Texteditor</source>
-        <translation type="unfinished"></translation>
+        <translation>Öppna med textredigerare</translation>
     </message>
     <message>
         <source>Change Permissions</source>
-        <translation type="unfinished"></translation>
+        <translation>Ändra behörighet</translation>
     </message>
     <message>
         <source>Rename</source>
-        <translation type="unfinished"></translation>
+        <translation>Byt namn</translation>
     </message>
     <message>
         <source>Error renaming</source>
-        <translation type="unfinished"></translation>
+        <translation>Kunde inte byta namn</translation>
     </message>
     <message>
         <source>Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Egenskaper</translation>
     </message>
     <message>
         <source>Location</source>
-        <translation type="unfinished"></translation>
+        <translation>Plats</translation>
     </message>
     <message>
         <source>Type</source>
-        <translation type="unfinished"></translation>
+        <translation>Typ</translation>
     </message>
     <message>
         <source>Link to %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Länk till %1</translation>
     </message>
     <message>
         <source>Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Storlek</translation>
     </message>
     <message>
         <source>Permissions</source>
-        <translation type="unfinished"></translation>
+        <translation>Behörighet</translation>
     </message>
     <message>
         <source>Owner</source>
-        <translation type="unfinished"></translation>
+        <translation>Ägare</translation>
     </message>
     <message>
         <source>Group</source>
-        <translation type="unfinished"></translation>
+        <translation>Grupp</translation>
     </message>
     <message>
         <source>Last modified</source>
-        <translation type="unfinished"></translation>
+        <translation>Ändrad</translation>
     </message>
 </context>
 <context>
@@ -261,18 +261,18 @@ Filen sparad i </translation>
     <name>ImageControls</name>
     <message>
         <source>Open externally</source>
-        <translation type="unfinished"></translation>
+        <translation>Öppna externt</translation>
     </message>
     <message>
         <source>Opening...</source>
-        <translation type="unfinished"></translation>
+        <translation>Öppnar...</translation>
     </message>
 </context>
 <context>
     <name>MultiSelectBar</name>
     <message>
         <source>Deleting %1 files</source>
-        <translation type="unfinished"></translation>
+        <translation>Tar bort %1 filer</translation>
     </message>
 </context>
 <context>
@@ -311,238 +311,244 @@ Filen sparad i </translation>
     </message>
     <message>
         <source>File operation succeeded</source>
-        <translation>Filoperationen lyckades</translation>
+        <translation>Filåtgärd slutförd</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Namn</translation>
     </message>
     <message>
         <source>Time</source>
-        <translation type="unfinished"></translation>
+        <translation>Tid</translation>
     </message>
     <message>
         <source>Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Storlek</translation>
     </message>
     <message>
         <source>Type</source>
-        <translation type="unfinished"></translation>
+        <translation>Typ</translation>
     </message>
     <message>
         <source>Sort by: </source>
-        <translation type="unfinished"></translation>
+        <translation>Sortera efter: </translation>
     </message>
     <message>
         <source>Add to places</source>
-        <translation type="unfinished"></translation>
+        <translation>Lägg till i platser</translation>
     </message>
     <message>
         <source>Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Egenskaper</translation>
     </message>
 </context>
 <context>
     <name>OpenURLPage</name>
     <message>
         <source>Load URL</source>
-        <translation type="unfinished"></translation>
+        <translation>Läs in URL</translation>
     </message>
     <message>
         <source>Type in URL here</source>
-        <translation type="unfinished"></translation>
+        <translation>Skriv URL:en här</translation>
     </message>
     <message>
         <source>URL to media file/stream</source>
-        <translation type="unfinished"></translation>
+        <translation>URL till mediafil/-ström</translation>
     </message>
 </context>
 <context>
     <name>PermissionDialog</name>
     <message>
         <source>Could not change permission</source>
-        <translation type="unfinished"></translation>
+        <translation>Kunde inte ändra behörighet</translation>
     </message>
     <message>
         <source>Change Permissions</source>
-        <translation type="unfinished"></translation>
+        <translation>Ändra behörighet</translation>
     </message>
     <message>
         <source>Change</source>
-        <translation type="unfinished"></translation>
+        <translation>Ändra</translation>
     </message>
     <message>
         <source>Change permissions for</source>
-        <translation type="unfinished"></translation>
+        <translation>Ändra behörighet för</translation>
     </message>
     <message>
         <source>Read</source>
-        <translation type="unfinished"></translation>
+        <translation>Läs</translation>
     </message>
     <message>
         <source>Write</source>
-        <translation type="unfinished"></translation>
+        <translation>Skriv</translation>
     </message>
     <message>
         <source>Execute</source>
-        <translation type="unfinished"></translation>
+        <translation>Kör</translation>
     </message>
     <message>
         <source>Owner</source>
-        <translation type="unfinished"></translation>
+        <translation>Ägare</translation>
     </message>
     <message>
         <source>Group</source>
-        <translation type="unfinished"></translation>
+        <translation>Grupp</translation>
     </message>
     <message>
         <source>Others</source>
-        <translation type="unfinished"></translation>
+        <translation>Annat</translation>
     </message>
 </context>
 <context>
     <name>PlacesPage</name>
     <message>
         <source>Device memory</source>
-        <translation type="unfinished"></translation>
+        <translation>Enhetsminne</translation>
     </message>
     <message>
         <source>SD Card</source>
-        <translation type="unfinished"></translation>
+        <translation>SD-kort</translation>
     </message>
     <message>
         <source>Home</source>
-        <translation type="unfinished"></translation>
+        <translation>Hem</translation>
     </message>
     <message>
         <source>Documents</source>
-        <translation type="unfinished"></translation>
+        <translation>Dokument</translation>
     </message>
     <message>
         <source>Downloads</source>
-        <translation type="unfinished"></translation>
+        <translation>Nedladdningar</translation>
     </message>
     <message>
         <source>Music</source>
-        <translation type="unfinished"></translation>
+        <translation>Musik</translation>
     </message>
     <message>
         <source>Pictures</source>
-        <translation type="unfinished"></translation>
+        <translation>Bilder</translation>
     </message>
     <message>
         <source>Videos</source>
-        <translation type="unfinished"></translation>
+        <translation>Videor</translation>
     </message>
     <message>
         <source>Android Storage</source>
-        <translation type="unfinished"></translation>
+        <translation>Android-lagring</translation>
     </message>
     <message>
         <source>Places</source>
-        <translation type="unfinished"></translation>
+        <translation>Platser</translation>
     </message>
     <message>
         <source>Search</source>
-        <translation type="unfinished"></translation>
+        <translation>Sök</translation>
     </message>
     <message>
         <source>Devices</source>
-        <translation type="unfinished"></translation>
+        <translation>Enheter</translation>
     </message>
     <message>
         <source>Common</source>
-        <translation type="unfinished"></translation>
+        <translation>Vanliga</translation>
     </message>
     <message>
         <source>Custom</source>
-        <translation type="unfinished"></translation>
+        <translation>Anpassat</translation>
     </message>
     <message>
         <source>Deleting </source>
-        <translation type="unfinished">Tar bort </translation>
+        <translation>Tar bort </translation>
     </message>
     <message>
         <source>Rename</source>
-        <translation type="unfinished"></translation>
+        <translation>Byt namn</translation>
     </message>
 </context>
 <context>
     <name>RenameDialog</name>
     <message>
         <source>Rename</source>
-        <translation type="unfinished"></translation>
+        <translation>Byt namn</translation>
     </message>
     <message>
         <source>Give a new name for</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange ett nytt namn för</translation>
     </message>
     <message>
         <source>New name</source>
-        <translation type="unfinished"></translation>
+        <translation>Nytt namn</translation>
     </message>
 </context>
 <context>
     <name>TextEditor</name>
     <message>
         <source>Save</source>
-        <translation type="unfinished"></translation>
+        <translation>Spara</translation>
     </message>
 </context>
 <context>
     <name>VideoPlayer</name>
     <message>
         <source>Open File</source>
-        <translation type="unfinished">Öppna fil</translation>
+        <translation>Öppna fil</translation>
     </message>
     <message>
         <source>Open Stream</source>
-        <translation type="unfinished"></translation>
+        <translation>Öppna ström</translation>
     </message>
 </context>
 <context>
     <name>VideoPlayerComponent</name>
     <message>
         <source>Pull down to load file or stream</source>
-        <translation type="unfinished"></translation>
+        <translation>Dra neråt för att läsa in fil eller ström</translation>
     </message>
     <message>
         <source>Dismiss</source>
-        <translation type="unfinished">Avbryt</translation>
+        <translation>Avfärda</translation>
     </message>
     <message>
         <source>Zoomed to fit screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Zoomad för att passa skärmen</translation>
     </message>
     <message>
         <source>Original</source>
-        <translation type="unfinished"></translation>
+        <translation>Original</translation>
     </message>
     <message>
         <source>
 The video cannot be played due to a problem allocating resources.
 On Youtube Videos please make sure to be logged in. Some videos might be geoblocked or require you to be logged into youtube.</source>
-        <translation type="unfinished"></translation>
+        <translation>
+Videon kan inte spelas upp på grund av problem med resursallokering.
+Tillse att du är inloggad, för Youtube-videor. Vissa videor kan vara geografiskt blockerade eller kräva inloggning på Youtube.</translation>
     </message>
     <message>
         <source>
 The audio and or video format is not supported.</source>
-        <translation type="unfinished"></translation>
+        <translation>
+Ljud- och/eller videoformatet stöds inte.</translation>
     </message>
     <message>
         <source>
 The video cannot be played due to network issues.</source>
-        <translation type="unfinished"></translation>
+        <translation>
+Videon kan inte spelas upp på grund av nätverksproblem.</translation>
     </message>
     <message>
         <source>
 The video cannot be played due to insufficient permissions.</source>
-        <translation type="unfinished"></translation>
+        <translation>
+Videon kan inte spelas upp på grund av otillräcklig behörighet.</translation>
     </message>
     <message>
         <source>
 The video cannot be played because the media service could not be instantiated.</source>
-        <translation type="unfinished"></translation>
+        <translation>
+Videon kan inte spelas upp eftersom medietjänsten inte kunde instansieras.</translation>
     </message>
 </context>
 </TS>
