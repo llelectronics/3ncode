@@ -36,7 +36,7 @@ ApplicationWindow
 {
     id: mainWindow
     property string appname: "Encode"
-    property string version: "1.3"
+    property string version: "1.4"
     property string appicon: "img/harbour-encode.png"
     property var firstPage
     property string statusText
