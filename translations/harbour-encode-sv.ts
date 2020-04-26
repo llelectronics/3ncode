@@ -343,15 +343,15 @@ Filen sparad i </translation>
     </message>
     <message>
         <source> Files</source>
-        <translation type="unfinished"></translation>
+        <translation> filer</translation>
     </message>
     <message>
         <source>Error deleting file(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>Kunde inte ta bort fil(er)</translation>
     </message>
     <message>
         <source>File deletion succeeded</source>
-        <translation type="unfinished"></translation>
+        <translation>Filborttagning slutförd</translation>
     </message>
 </context>
 <context>
